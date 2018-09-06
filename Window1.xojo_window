@@ -52,39 +52,7 @@ Begin Window Window1
       Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   275
-   End
-   Begin PushButton PushButton1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "OK"
-      Default         =   True
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   500
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   360
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
+      Width           =   560
    End
 End
 #tag EndWindow
@@ -92,18 +60,18 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  dim p as new picture(64,64,32)
+		  dim p as new picture(128,128,32)
 		  dim i,j as integer
 		  
 		  p.RGBSurface.FloodFill(0,0,rgb(rnd*255,rnd*255,rnd*255))
 		  
-		  for i = 1 to 63
-		    for j = 1 to 63
+		  for i = 2 to 125
+		    for j = 2 to 125
 		      p.RGBSurface.Pixel(i,j) = rgb(rnd*255,rnd*255,rnd*255)
 		    next
 		  next
 		  
-		  g.DrawPicture(p,0,0)
+		  g.DrawPicture(p,110,110)
 		  
 		End Sub
 	#tag EndEvent
@@ -114,25 +82,18 @@ End
 #tag Events Canvas1
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  dim p as new picture(64,64,32)
+		  dim p as new picture(128,128,32)
 		  dim i,j as integer
 		  
 		  p.RGBSurface.FloodFill(0,0,rgb(rnd*255,rnd*255,rnd*255))
 		  
-		  for i = 1 to 63
-		    for j = 1 to 63
+		  for i = 2 to 125
+		    for j = 2 to 125
 		      p.RGBSurface.Pixel(i,j) = rgb(rnd*255,rnd*255,rnd*255)
 		    next
 		  next
 		  
-		  g.DrawPicture(p,0,0)
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton1
-	#tag Event
-		Sub Action()
+		  g.DrawPicture(p,220,220)
 		  
 		End Sub
 	#tag EndEvent
@@ -361,10 +322,5 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="p1"
-		Group="Behavior"
-		Type="picture"
 	#tag EndViewProperty
 #tag EndViewBehavior

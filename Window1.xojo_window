@@ -59,6 +59,21 @@ End
 
 #tag WindowCode
 	#tag Event
+		Sub Open()
+		  dim i,j,k as integer
+		  dim new_ga_p as ga_picture
+		  
+		  for k = 1 to 4
+		    new_ga_p = new ga_picture
+		    
+		    
+		    ga_pictures_array.Append new_ga_p
+		  next
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  dim p as new picture(128,128,32)
 		  dim i,j as integer
@@ -75,6 +90,11 @@ End
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag Property, Flags = &h0
+		ga_pictures_array(-1) As ga_picture
+	#tag EndProperty
 
 
 #tag EndWindowCode

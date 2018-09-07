@@ -1,7 +1,7 @@
 #tag Class
 Protected Class ga_picture
 	#tag Property, Flags = &h0
-		picture(128,128,4) As Integer
+		picture(128,128) As Color
 	#tag EndProperty
 
 
@@ -40,7 +40,7 @@ Protected Class ga_picture
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="picture(128,128,4)"
+			Name="picture(128,128)"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

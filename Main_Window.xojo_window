@@ -1,5 +1,5 @@
 #tag Window
-Begin Window Window1
+Begin Window Main_Window
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
@@ -9,7 +9,7 @@ Begin Window Window1
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   400
+   Height          =   316
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -23,37 +23,9 @@ Begin Window Window1
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
+   Title           =   "GA Pictures"
    Visible         =   True
-   Width           =   600
-   Begin Canvas Canvas1
-      AcceptFocus     =   False
-      AcceptTabs      =   False
-      AutoDeactivate  =   True
-      Backdrop        =   0
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   360
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   20
-      Transparent     =   True
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   560
-   End
+   Width           =   395
 End
 #tag EndWindow
 
@@ -63,9 +35,14 @@ End
 		  dim i,j,k as integer
 		  dim new_ga_p as ga_picture
 		  
-		  for k = 1 to 4
+		  for k = 0 to 3
 		    new_ga_p = new ga_picture
 		    
+		    for i = 0 to 127
+		      for j = 0 to 127
+		        new_ga_p.picture(i,j) = rgb(rnd*255,rnd*255,rnd*255)
+		      next
+		    next
 		    
 		    ga_pictures_array.Append new_ga_p
 		  next
@@ -75,19 +52,19 @@ End
 
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  dim p as new picture(128,128,32)
-		  dim i,j as integer
+		  dim i,j,k as integer
 		  
-		  p.RGBSurface.FloodFill(0,0,rgb(rnd*255,rnd*255,rnd*255))
-		  
-		  for i = 2 to 125
-		    for j = 2 to 125
-		      p.RGBSurface.Pixel(i,j) = rgb(rnd*255,rnd*255,rnd*255)
+		  for k = 0 to 3
+		    dim p as new picture(128,128,32)
+		    
+		    for i = 0 to 127
+		      for j = 0 to 127
+		        p.RGBSurface.Pixel(i,j) = ga_pictures_array(k).picture(i,j)
+		      next
 		    next
+		    
+		    g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
 		  next
-		  
-		  g.DrawPicture(p,110,110)
-		  
 		End Sub
 	#tag EndEvent
 
@@ -99,25 +76,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events Canvas1
-	#tag Event
-		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  dim p as new picture(128,128,32)
-		  dim i,j as integer
-		  
-		  p.RGBSurface.FloodFill(0,0,rgb(rnd*255,rnd*255,rnd*255))
-		  
-		  for i = 2 to 125
-		    for j = 2 to 125
-		      p.RGBSurface.Pixel(i,j) = rgb(rnd*255,rnd*255,rnd*255)
-		    next
-		  next
-		  
-		  g.DrawPicture(p,220,220)
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"

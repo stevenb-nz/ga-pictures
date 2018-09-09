@@ -9,23 +9,111 @@ Begin Window Main_Window
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   316
+   Height          =   416
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
-   MaxHeight       =   32000
+   MaxHeight       =   416
    MaximizeButton  =   True
-   MaxWidth        =   32000
+   MaxWidth        =   316
    MenuBar         =   671768575
    MenuBarVisible  =   True
-   MinHeight       =   64
+   MinHeight       =   416
    MinimizeButton  =   True
-   MinWidth        =   64
+   MinWidth        =   316
    Placement       =   0
-   Resizeable      =   True
+   Resizeable      =   False
    Title           =   "GA Pictures"
    Visible         =   True
-   Width           =   395
+   Width           =   316
+   BeginSegmented SegmentedControl SegmentedControl1
+      Enabled         =   True
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   17
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MacControlStyle =   0
+      Scope           =   0
+      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
+      SelectionType   =   0
+      TabIndex        =   0
+      TabPanelIndex   =   0
+      Top             =   157
+      Transparent     =   False
+      Visible         =   True
+      Width           =   128
+   End
+   BeginSegmented SegmentedControl SegmentedControl2
+      Enabled         =   True
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   165
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MacControlStyle =   0
+      Scope           =   0
+      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
+      SelectionType   =   0
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      Top             =   157
+      Transparent     =   False
+      Visible         =   True
+      Width           =   128
+   End
+   BeginSegmented SegmentedControl SegmentedControl3
+      Enabled         =   True
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   17
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MacControlStyle =   0
+      Scope           =   0
+      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
+      SelectionType   =   0
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      Top             =   335
+      Transparent     =   False
+      Visible         =   True
+      Width           =   128
+   End
+   BeginSegmented SegmentedControl SegmentedControl4
+      Enabled         =   True
+      Height          =   20
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   165
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MacControlStyle =   0
+      Scope           =   0
+      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
+      SelectionType   =   0
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      Top             =   335
+      Transparent     =   False
+      Visible         =   True
+      Width           =   128
+   End
 End
 #tag EndWindow
 
@@ -63,7 +151,7 @@ End
 		      next
 		    next
 		    
-		    g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
+		    g.DrawPicture(p,148*(k mod 2)+20,178*(k \ 2)+20)
 		  next
 		End Sub
 	#tag EndEvent

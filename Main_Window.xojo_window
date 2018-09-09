@@ -26,10 +26,10 @@ Begin Window Main_Window
    Title           =   "GA Pictures"
    Visible         =   True
    Width           =   316
-   BeginSegmented SegmentedControl SegmentedControl1
+   BeginSegmented SegmentedControl KeepDump
       Enabled         =   True
       Height          =   20
-      Index           =   -2147483648
+      Index           =   0
       InitialParent   =   ""
       Left            =   17
       LockBottom      =   False
@@ -48,10 +48,10 @@ Begin Window Main_Window
       Visible         =   True
       Width           =   128
    End
-   BeginSegmented SegmentedControl SegmentedControl2
+   BeginSegmented SegmentedControl KeepDump
       Enabled         =   True
       Height          =   20
-      Index           =   -2147483648
+      Index           =   1
       InitialParent   =   ""
       Left            =   165
       LockBottom      =   False
@@ -70,10 +70,10 @@ Begin Window Main_Window
       Visible         =   True
       Width           =   128
    End
-   BeginSegmented SegmentedControl SegmentedControl3
+   BeginSegmented SegmentedControl KeepDump
       Enabled         =   True
       Height          =   20
-      Index           =   -2147483648
+      Index           =   2
       InitialParent   =   ""
       Left            =   17
       LockBottom      =   False
@@ -92,10 +92,10 @@ Begin Window Main_Window
       Visible         =   True
       Width           =   128
    End
-   BeginSegmented SegmentedControl SegmentedControl4
+   BeginSegmented SegmentedControl KeepDump
       Enabled         =   True
       Height          =   20
-      Index           =   -2147483648
+      Index           =   3
       InitialParent   =   ""
       Left            =   165
       LockBottom      =   False

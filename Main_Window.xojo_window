@@ -123,6 +123,9 @@ End
 		  dim i,j,k as integer
 		  dim new_ga_p as ga_picture
 		  
+		  keepIndex = -1
+		  dumpIndex = -1
+		  
 		  for k = 0 to 3
 		    new_ga_p = new ga_picture
 		    
@@ -158,12 +161,38 @@ End
 
 
 	#tag Property, Flags = &h0
+		dumpIndex As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		ga_pictures_array(-1) As ga_picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		keepIndex As Integer
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
+#tag Events KeepDump
+	#tag Event
+		Sub Action(index as Integer, itemIndex as integer)
+		  if itemIndex = 0 then
+		    if keepIndex > -1 and keepIndex <> index then
+		      KeepDump(keepIndex).Items(itemIndex).selected = false
+		    end
+		    keepIndex = index
+		  else
+		    if dumpIndex > -1 and dumpIndex <> index then
+		      KeepDump(dumpIndex).Items(itemIndex).selected = false
+		    end
+		    dumpIndex = index
+		  end
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"

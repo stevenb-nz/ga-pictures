@@ -193,6 +193,13 @@ End
 
 
 	#tag Method, Flags = &h0
+		Function evolve(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  return p1
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub evolveEnabled()
 		  if dumpIndex > - 1 and keepIndex > -1 and dumpIndex <> keepIndex then
 		    EvolveButton.Enabled = true
@@ -234,6 +241,44 @@ End
 		  end
 		  
 		  evolveEnabled
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EvolveButton
+	#tag Event
+		Sub Action()
+		  dim i,evolve1,evolve2 as integer
+		  dim temp_ga_p_array(-1) As ga_picture
+		  
+		  evolve1 = -1
+		  for i = 0 to 3
+		    if i <> keepIndex and i <> dumpIndex then
+		      if evolve1 = -1 then
+		        evolve1 = i
+		      else
+		        evolve2 = i
+		      end
+		    end
+		  next
+		  
+		  temp_ga_p_array.Append ga_pictures_array(keepIndex)
+		  temp_ga_p_array.Append evolve(ga_pictures_array(keepIndex),ga_pictures_array(evolve1))
+		  temp_ga_p_array.Append evolve(ga_pictures_array(keepIndex),ga_pictures_array(evolve2))
+		  temp_ga_p_array.Append evolve(ga_pictures_array(evolve1),ga_pictures_array(evolve2))
+		  
+		  redim ga_pictures_array(-1)
+		  
+		  for i = 0 to UBound(temp_ga_p_array)
+		    ga_pictures_array.Append temp_ga_p_array(i)
+		  next
+		  
+		  EvolveButton.Enabled = false
+		  KeepDump(keepIndex).Items(0).selected = false
+		  KeepDump(dumpIndex).Items(1).selected = false
+		  keepindex = -1
+		  dumpindex = -1
+		  refresh
 		  
 		End Sub
 	#tag EndEvent
@@ -462,5 +507,15 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="dumpIndex"
+		Group="Behavior"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="keepIndex"
+		Group="Behavior"
+		Type="Integer"
 	#tag EndViewProperty
 #tag EndViewBehavior

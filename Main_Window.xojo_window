@@ -193,6 +193,13 @@ End
 
 
 	#tag Method, Flags = &h0
+		Function colour_diff(c1 as Color, c2 as Color) As integer
+		  return abs(c1.Red-c2.Red)+abs(c1.green-c2.green)+abs(c1.blue-c2.blue)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function evolve(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
 		  dim return_pic As new ga_picture

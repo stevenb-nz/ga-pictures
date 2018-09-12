@@ -194,7 +194,20 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  return p1
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      if rnd < 0.5 then
+		        return_pic.picture(i,j) = p1.picture(i,j)
+		      else
+		        return_pic.picture(i,j) = p2.picture(i,j)
+		      end
+		    next
+		  next
+		  
+		  return return_pic
 		  
 		End Function
 	#tag EndMethod

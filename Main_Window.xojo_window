@@ -200,7 +200,17 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function evolve(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		Function evolve(evolve_method as integer, p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  Select case evolve_method
+		  case 1
+		    return evolve1(p1,p2)
+		  end select
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function evolve1(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
@@ -268,9 +278,10 @@ End
 #tag Events EvolveButton
 	#tag Event
 		Sub Action()
-		  dim i,evolve1,evolve2 as integer
+		  dim i,evolve1,evolve2,evolve_method as integer
 		  dim temp_ga_p_array(-1) As ga_picture
 		  
+		  evolve_method = 1
 		  evolve1 = -1
 		  for i = 0 to 3
 		    if i <> keepIndex and i <> dumpIndex then
@@ -283,9 +294,9 @@ End
 		  next
 		  
 		  temp_ga_p_array.Append ga_pictures_array(keepIndex)
-		  temp_ga_p_array.Append evolve(ga_pictures_array(keepIndex),ga_pictures_array(evolve1))
-		  temp_ga_p_array.Append evolve(ga_pictures_array(keepIndex),ga_pictures_array(evolve2))
-		  temp_ga_p_array.Append evolve(ga_pictures_array(evolve1),ga_pictures_array(evolve2))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve1))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve2))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(evolve1),ga_pictures_array(evolve2))
 		  
 		  redim ga_pictures_array(-1)
 		  

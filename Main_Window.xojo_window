@@ -204,6 +204,8 @@ End
 		  Select case evolve_method
 		  case 1
 		    return evolve1(p1,p2)
+		  case 2
+		    return evolve2(p1,p2)
 		  end select
 		  
 		End Function
@@ -230,6 +232,26 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function evolve2(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      if neighbours_diff(p1,i,j) < neighbours_diff(p2,i,j) then
+		        return_pic.picture(i,j) = p1.picture(i,j)
+		      else
+		        return_pic.picture(i,j) = p2.picture(i,j)
+		      end
+		    next
+		  next
+		  
+		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub evolveEnabled()
 		  if dumpIndex > - 1 and keepIndex > -1 and dumpIndex <> keepIndex then
 		    EvolveButton.Enabled = true
@@ -237,6 +259,42 @@ End
 		    EvolveButton.Enabled = false
 		  end
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function neighbours_diff(pic as ga_picture, x as integer, y as integer) As integer
+		  dim return_value as integer
+		  
+		  return_value = 0
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		  end
+		  if x-1 > -1 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		  end
+		  if x-1 > -1 and y +1 < 128 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		  end
+		  if y +1 < 128 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		  end
+		  if x+1 < 128 and y +1 < 128 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		  end
+		  if x+1 < 128 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		  end
+		  if x+1 < 128 and y -1 > -1 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		  end
+		  if y -1 > -1 then
+		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		  end
+		  
+		  return return_value
+		  
+		End Function
 	#tag EndMethod
 
 
@@ -281,7 +339,7 @@ End
 		  dim i,evolve1,evolve2,evolve_method as integer
 		  dim temp_ga_p_array(-1) As ga_picture
 		  
-		  evolve_method = 1
+		  evolve_method = 2
 		  evolve1 = -1
 		  for i = 0 to 3
 		    if i <> keepIndex and i <> dumpIndex then

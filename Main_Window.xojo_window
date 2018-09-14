@@ -206,6 +206,8 @@ End
 		    return evolve1(p1,p2)
 		  case 2
 		    return evolve2(p1,p2)
+		  case 3
+		    return evolve3(p1,p2)
 		  end select
 		  
 		End Function
@@ -233,6 +235,26 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve2(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      if neighbours_diff(p1,i,j) < neighbours_diff(p2,i,j) then
+		        return_pic.picture(i,j) = p1.picture(i,j)
+		      else
+		        return_pic.picture(i,j) = p2.picture(i,j)
+		      end
+		    next
+		  next
+		  
+		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function evolve3(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
@@ -339,7 +361,7 @@ End
 		  dim i,evolve1,evolve2,evolve_method as integer
 		  dim temp_ga_p_array(-1) As ga_picture
 		  
-		  evolve_method = 2
+		  evolve_method = 3
 		  evolve1 = -1
 		  for i = 0 to 3
 		    if i <> keepIndex and i <> dumpIndex then

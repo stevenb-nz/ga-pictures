@@ -193,6 +193,75 @@ End
 
 
 	#tag Method, Flags = &h0
+		Function closest_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim diff,min_diff as integer
+		  dim return_colour as color
+		  
+		  min_diff = 256
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 128 and y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 128 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		    if diff < min_diff then
+		      min_diff = diff
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function colour_diff(c1 as Color, c2 as Color) As integer
 		  return abs(c1.Red-c2.Red)+abs(c1.green-c2.green)+abs(c1.blue-c2.blue)
 		  
@@ -255,15 +324,18 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve3(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim c1,c2 as color
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
 		  for i = 0 to 127
 		    for j = 0 to 127
-		      if neighbours_diff(p1,i,j) < neighbours_diff(p2,i,j) then
-		        return_pic.picture(i,j) = p1.picture(i,j)
+		      c1 = closest_neighbour(p1,i,j)
+		      c2 = closest_neighbour(p2,i,j)
+		      if colour_diff(p1.picture(i,j),c1) < colour_diff(p2.picture(i,j),c2) then
+		        return_pic.picture(i,j) = c1
 		      else
-		        return_pic.picture(i,j) = p2.picture(i,j)
+		        return_pic.picture(i,j) = c2
 		      end
 		    next
 		  next

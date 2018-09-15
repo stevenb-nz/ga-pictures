@@ -277,6 +277,8 @@ End
 		    return evolve2(p1,p2)
 		  case 3
 		    return evolve3(p1,p2)
+		  case 4
+		    return evolve4(p1,p2)
 		  end select
 		  
 		End Function
@@ -333,6 +335,29 @@ End
 		      c1 = closest_neighbour(p1,i,j)
 		      c2 = closest_neighbour(p2,i,j)
 		      if colour_diff(p1.picture(i,j),c1) < colour_diff(p2.picture(i,j),c2) then
+		        return_pic.picture(i,j) = c1
+		      else
+		        return_pic.picture(i,j) = c2
+		      end
+		    next
+		  next
+		  
+		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function evolve4(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim c1,c2 as color
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      c1 = furthest_neighbour(p1,i,j)
+		      c2 = furthest_neighbour(p2,i,j)
+		      if colour_diff(p1.picture(i,j),c1) > colour_diff(p2.picture(i,j),c2) then
 		        return_pic.picture(i,j) = c1
 		      else
 		        return_pic.picture(i,j) = c2
@@ -502,7 +527,7 @@ End
 		  dim i,evolve1,evolve2,evolve_method as integer
 		  dim temp_ga_p_array(-1) As ga_picture
 		  
-		  evolve_method = 3
+		  evolve_method = 4
 		  evolve1 = -1
 		  for i = 0 to 3
 		    if i <> keepIndex and i <> dumpIndex then

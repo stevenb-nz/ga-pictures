@@ -356,6 +356,75 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function furthest_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim diff,max_diff as integer
+		  dim return_colour as color
+		  
+		  max_diff = -1
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 128 and y +1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 128 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 128 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function neighbours_diff(pic as ga_picture, x as integer, y as integer) As integer
 		  dim return_value as integer
 		  

@@ -374,18 +374,20 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve5(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  dim c1,c2 as color
+		  dim c1,c2,f1,f2 as color
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
 		  for i = 0 to 127
 		    for j = 0 to 127
-		      c1 = furthest_neighbour(p1,i,j)
-		      c2 = furthest_neighbour(p2,i,j)
-		      if colour_diff(p1.picture(i,j),c1) > colour_diff(p2.picture(i,j),c2) then
-		        return_pic.picture(i,j) = c1
-		      else
+		      c1 = closest_neighbour(p1,i,j)
+		      c2 = closest_neighbour(p2,i,j)
+		      f1 = furthest_neighbour(p1,i,j)
+		      f2 = furthest_neighbour(p2,i,j)
+		      if colour_diff(c1,f1) > colour_diff(c2,f2) then
 		        return_pic.picture(i,j) = c2
+		      else
+		        return_pic.picture(i,j) = c1
 		      end
 		    next
 		  next

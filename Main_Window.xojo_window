@@ -279,6 +279,8 @@ End
 		    return evolve3(p1,p2)
 		  case 4
 		    return evolve4(p1,p2)
+		  case 5
+		    return evolve5(p1,p2)
 		  end select
 		  
 		End Function
@@ -349,6 +351,29 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve4(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim c1,c2 as color
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      c1 = furthest_neighbour(p1,i,j)
+		      c2 = furthest_neighbour(p2,i,j)
+		      if colour_diff(p1.picture(i,j),c1) > colour_diff(p2.picture(i,j),c2) then
+		        return_pic.picture(i,j) = c1
+		      else
+		        return_pic.picture(i,j) = c2
+		      end
+		    next
+		  next
+		  
+		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function evolve5(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim c1,c2 as color
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
@@ -524,25 +549,25 @@ End
 #tag Events EvolveButton
 	#tag Event
 		Sub Action()
-		  dim i,evolve1,evolve2,evolve_method as integer
+		  dim i,evolve_a,evolve_b,evolve_method as integer
 		  dim temp_ga_p_array(-1) As ga_picture
 		  
-		  evolve_method = 4
-		  evolve1 = -1
+		  evolve_method = 5
+		  evolve_a = -1
 		  for i = 0 to 3
 		    if i <> keepIndex and i <> dumpIndex then
-		      if evolve1 = -1 then
-		        evolve1 = i
+		      if evolve_a = -1 then
+		        evolve_a = i
 		      else
-		        evolve2 = i
+		        evolve_b = i
 		      end
 		    end
 		  next
 		  
 		  temp_ga_p_array.Append ga_pictures_array(keepIndex)
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve1))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve2))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(evolve1),ga_pictures_array(evolve2))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(evolve_a),ga_pictures_array(evolve_b))
 		  
 		  redim ga_pictures_array(-1)
 		  

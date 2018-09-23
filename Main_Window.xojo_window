@@ -516,6 +516,7 @@ End
 		Function normalise(pic as ga_picture) As ga_picture
 		  dim return_pic as new ga_picture
 		  dim i,j,min_r,max_r,min_g,max_g,min_b,max_b as integer
+		  dim r_ratio, g_ratio, b_ratio as double
 		  
 		  min_r = 255
 		  min_g = 255
@@ -547,7 +548,17 @@ End
 		    next
 		  next
 		  
-		  return pic
+		  r_ratio = (max_r-min_r)/255
+		  g_ratio = (max_g-min_g)/255 
+		  b_ratio = (max_b-min_b)/255
+		  
+		  for i = 0 to 127
+		    for j = 0 to 127
+		      return_pic.picture(i,j) = rgb((pic.picture(i,j).red-min_r)/r_ratio,(pic.picture(i,j).green-min_g)/g_ratio,(pic.picture(i,j).blue-min_b)/b_ratio)
+		    next
+		  next
+		  
+		  return return_pic
 		  
 		End Function
 	#tag EndMethod

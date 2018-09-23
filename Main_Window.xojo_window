@@ -566,10 +566,10 @@ End
 		    end
 		  next
 		  
-		  temp_ga_p_array.Append ga_pictures_array(keepIndex)
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(keepindex))
 		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a))
 		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(evolve_a),ga_pictures_array(evolve_b))
+		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex))
 		  
 		  redim ga_pictures_array(-1)
 		  

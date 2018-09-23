@@ -163,7 +163,7 @@ End
 		    
 		    for i = 0 to 127
 		      for j = 0 to 127
-		        new_ga_p.picture(i,j) = rgb(rnd*255,rnd*255,rnd*255)
+		        new_ga_p.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		      next
 		    next
 		    
@@ -517,9 +517,9 @@ End
 		  dim return_pic as new ga_picture
 		  dim i,j,min_r,max_r,min_g,max_g,min_b,max_b as integer
 		  
-		  min_r = 127
-		  min_g = 127
-		  min_b = 127
+		  min_r = 255
+		  min_g = 255
+		  min_b = 255
 		  max_r = 0 
 		  max_g = 0
 		  max_b = 0
@@ -529,9 +529,24 @@ End
 		      if pic.picture(i,j).red < min_r then
 		        min_r = pic.picture(i,j).red
 		      end
+		      if pic.picture(i,j).red > max_r then
+		        max_r = pic.picture(i,j).red
+		      end
+		      if pic.picture(i,j).green < min_g then
+		        min_g = pic.picture(i,j).green
+		      end
+		      if pic.picture(i,j).green > max_g then
+		        max_g = pic.picture(i,j).green
+		      end
+		      if pic.picture(i,j).red < min_b then
+		        min_b = pic.picture(i,j).red
+		      end
+		      if pic.picture(i,j).blue > max_b then
+		        max_b = pic.picture(i,j).blue
+		      end
 		    next
 		  next
-		  MsgBox str(min_r)
+		  
 		  return pic
 		  
 		End Function
@@ -592,9 +607,9 @@ End
 		  next
 		  
 		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(keepindex)))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b))
-		  temp_ga_p_array.Append evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex))
+		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a)))
+		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b)))
+		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex)))
 		  
 		  redim ga_pictures_array(-1)
 		  

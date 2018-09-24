@@ -9,16 +9,16 @@ Begin Window Main_Window
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   416
+   Height          =   316
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
-   MaxHeight       =   416
+   MaxHeight       =   316
    MaximizeButton  =   True
    MaxWidth        =   316
    MenuBar         =   671768575
    MenuBarVisible  =   True
-   MinHeight       =   416
+   MinHeight       =   316
    MinimizeButton  =   True
    MinWidth        =   316
    Placement       =   0
@@ -26,130 +26,48 @@ Begin Window Main_Window
    Title           =   "GA Pictures"
    Visible         =   True
    Width           =   316
-   BeginSegmented SegmentedControl KeepDump
-      Enabled         =   True
-      Height          =   20
-      Index           =   0
-      InitialParent   =   ""
-      Left            =   17
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacControlStyle =   0
-      Scope           =   0
-      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
-      SelectionType   =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      Top             =   157
-      Transparent     =   False
-      Visible         =   True
-      Width           =   128
-   End
-   BeginSegmented SegmentedControl KeepDump
-      Enabled         =   True
-      Height          =   20
-      Index           =   1
-      InitialParent   =   ""
-      Left            =   165
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacControlStyle =   0
-      Scope           =   0
-      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
-      SelectionType   =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      Top             =   157
-      Transparent     =   False
-      Visible         =   True
-      Width           =   128
-   End
-   BeginSegmented SegmentedControl KeepDump
-      Enabled         =   True
-      Height          =   20
-      Index           =   2
-      InitialParent   =   ""
-      Left            =   17
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacControlStyle =   0
-      Scope           =   0
-      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
-      SelectionType   =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      Top             =   335
-      Transparent     =   False
-      Visible         =   True
-      Width           =   128
-   End
-   BeginSegmented SegmentedControl KeepDump
-      Enabled         =   True
-      Height          =   20
-      Index           =   3
-      InitialParent   =   ""
-      Left            =   165
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MacControlStyle =   0
-      Scope           =   0
-      Segments        =   "Keep\n\nFalse\rDump\n\nFalse"
-      SelectionType   =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      Top             =   335
-      Transparent     =   False
-      Visible         =   True
-      Width           =   128
-   End
-   Begin PushButton EvolveButton
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Evolve"
-      Default         =   False
-      Enabled         =   False
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   216
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   376
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  'g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
+		  
+		  
+		  'dim i,evolve_a,evolve_b,evolve_method as integer
+		  'dim temp_ga_p_array(-1) As ga_picture
+		  '
+		  'evolve_method = 5
+		  'evolve_a = -1
+		  'for i = 0 to 3
+		  'if i <> keepIndex and i <> dumpIndex then
+		  'if evolve_a = -1 then
+		  'evolve_a = i
+		  'else
+		  'evolve_b = i
+		  'end
+		  'end
+		  'next
+		  '
+		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(keepindex)))
+		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a)))
+		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b)))
+		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex)))
+		  '
+		  'redim ga_pictures_array(-1)
+		  '
+		  'for i = 0 to UBound(temp_ga_p_array)
+		  'ga_pictures_array.Append temp_ga_p_array(i)
+		  'next
+		  '
+		  'keepindex = -1
+		  'dumpindex = -1
+		  'refresh
+		  
+		End Function
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  dim i,j,k as integer
@@ -186,7 +104,7 @@ End
 		      next
 		    next
 		    
-		    g.DrawPicture(p,148*(k mod 2)+20,178*(k \ 2)+20)
+		    g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
 		  next
 		End Sub
 	#tag EndEvent
@@ -399,11 +317,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub evolveEnabled()
-		  if dumpIndex > - 1 and keepIndex > -1 and dumpIndex <> keepIndex then
-		    EvolveButton.Enabled = true
-		  else
-		    EvolveButton.Enabled = false
-		  end
+		  
 		End Sub
 	#tag EndMethod
 
@@ -579,65 +493,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events KeepDump
-	#tag Event
-		Sub Action(index as Integer, itemIndex as integer)
-		  if itemIndex = 0 then
-		    if keepIndex > -1 and keepIndex <> index then
-		      KeepDump(keepIndex).Items(itemIndex).selected = false
-		    end
-		    keepIndex = index
-		  else
-		    if dumpIndex > -1 and dumpIndex <> index then
-		      KeepDump(dumpIndex).Items(itemIndex).selected = false
-		    end
-		    dumpIndex = index
-		  end
-		  
-		  evolveEnabled
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EvolveButton
-	#tag Event
-		Sub Action()
-		  dim i,evolve_a,evolve_b,evolve_method as integer
-		  dim temp_ga_p_array(-1) As ga_picture
-		  
-		  evolve_method = 5
-		  evolve_a = -1
-		  for i = 0 to 3
-		    if i <> keepIndex and i <> dumpIndex then
-		      if evolve_a = -1 then
-		        evolve_a = i
-		      else
-		        evolve_b = i
-		      end
-		    end
-		  next
-		  
-		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(keepindex)))
-		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a)))
-		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b)))
-		  temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex)))
-		  
-		  redim ga_pictures_array(-1)
-		  
-		  for i = 0 to UBound(temp_ga_p_array)
-		    ga_pictures_array.Append temp_ga_p_array(i)
-		  next
-		  
-		  EvolveButton.Enabled = false
-		  KeepDump(keepIndex).Items(0).selected = false
-		  KeepDump(dumpIndex).Items(1).selected = false
-		  keepindex = -1
-		  dumpindex = -1
-		  refresh
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="Name"

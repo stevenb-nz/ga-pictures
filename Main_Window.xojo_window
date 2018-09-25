@@ -32,38 +32,40 @@ End
 #tag WindowCode
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  'g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
+		  dim i,j,k as integer
+		  dim xminus20, yminus20, xdiv148, ydiv148, xmod148, ymod148 as integer
+		  dim keep as ga_picture
+		  dim temp_ga_p_array(-1) as ga_picture
 		  
+		  j = 5
 		  
-		  'dim i,evolve_a,evolve_b,evolve_method as integer
-		  'dim temp_ga_p_array(-1) As ga_picture
-		  '
-		  'evolve_method = 5
-		  'evolve_a = -1
-		  'for i = 0 to 3
-		  'if i <> keepIndex and i <> dumpIndex then
-		  'if evolve_a = -1 then
-		  'evolve_a = i
-		  'else
-		  'evolve_b = i
-		  'end
-		  'end
-		  'next
-		  '
-		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(keepindex)))
-		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_a)))
-		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(evolve_b)))
-		  'temp_ga_p_array.Append normalise(evolve(evolve_method,ga_pictures_array(keepIndex),ga_pictures_array(dumpIndex)))
-		  '
-		  'redim ga_pictures_array(-1)
-		  '
-		  'for i = 0 to UBound(temp_ga_p_array)
-		  'ga_pictures_array.Append temp_ga_p_array(i)
-		  'next
-		  '
-		  'keepindex = -1
-		  'dumpindex = -1
-		  'refresh
+		  xminus20 = x - 20
+		  yminus20 = y - 20
+		  xdiv148 = xminus20 \ 148
+		  xmod148 = xminus20 mod 148
+		  ydiv148 = yminus20 \ 148
+		  ymod148 = yminus20 mod 148
+		  if xmod148 > 0 and xmod148 < 129 and ymod148 > 0 and ymod148 < 129 then
+		    k = xdiv148 + ydiv148*2
+		    
+		    keep = ga_pictures_array(k)
+		    ga_pictures_array.Remove(k)
+		    
+		    temp_ga_p_array.Append normalise(evolve(j,keep,keep))
+		    
+		    for i = 0 to UBound(ga_pictures_array)
+		      temp_ga_p_array.Append normalise(evolve(j,keep,ga_pictures_array(i)))
+		    next
+		    
+		    redim ga_pictures_array(-1)
+		    
+		    for i = 0 to UBound(temp_ga_p_array)
+		      ga_pictures_array.Append temp_ga_p_array(i)
+		    next
+		    
+		    refresh
+		    
+		  end
 		  
 		End Function
 	#tag EndEvent
@@ -72,9 +74,6 @@ End
 		Sub Open()
 		  dim i,j,k as integer
 		  dim new_ga_p as ga_picture
-		  
-		  keepIndex = -1
-		  dumpIndex = -1
 		  
 		  for k = 0 to 3
 		    new_ga_p = new ga_picture
@@ -479,15 +478,7 @@ End
 
 
 	#tag Property, Flags = &h0
-		dumpIndex As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		ga_pictures_array(-1) As ga_picture
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		keepIndex As Integer
 	#tag EndProperty
 
 

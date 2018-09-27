@@ -9,23 +9,23 @@ Begin Window Main_Window
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   316
+   Height          =   326
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
-   MaxHeight       =   316
+   MaxHeight       =   326
    MaximizeButton  =   True
-   MaxWidth        =   316
+   MaxWidth        =   326
    MenuBar         =   671768575
    MenuBarVisible  =   True
-   MinHeight       =   316
+   MinHeight       =   326
    MinimizeButton  =   True
-   MinWidth        =   316
+   MinWidth        =   326
    Placement       =   0
    Resizeable      =   False
    Title           =   "GA Pictures"
    Visible         =   True
-   Width           =   316
+   Width           =   326
 End
 #tag EndWindow
 
@@ -33,7 +33,7 @@ End
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  dim i,j,k as integer
-		  dim xminus20, yminus20, xdiv148, ydiv148, xmod148, ymod148 as integer
+		  dim xminus20, yminus20, xdiv74, ydiv74, xmod74, ymod74 as integer
 		  dim keep as ga_picture
 		  dim temp_ga_p_array(-1) as ga_picture
 		  
@@ -41,12 +41,12 @@ End
 		  
 		  xminus20 = x - 20
 		  yminus20 = y - 20
-		  xdiv148 = xminus20 \ 148
-		  xmod148 = xminus20 mod 148
-		  ydiv148 = yminus20 \ 148
-		  ymod148 = yminus20 mod 148
-		  if xmod148 > 0 and xmod148 < 129 and ymod148 > 0 and ymod148 < 129 then
-		    k = xdiv148 + ydiv148*2
+		  xdiv74 = xminus20 \ 74
+		  xmod74 = xminus20 mod 74
+		  ydiv74 = yminus20 \ 74
+		  ymod74= yminus20 mod 74
+		  if xmod74 > 0 and xmod74 < 65 and ymod74 > 0 and ymod74 < 65 then
+		    k = xdiv74 + ydiv74*4
 		    
 		    keep = ga_pictures_array(k)
 		    ga_pictures_array.Remove(k)
@@ -80,11 +80,11 @@ End
 		  dim i,j,k as integer
 		  dim new_ga_p as ga_picture
 		  
-		  for k = 0 to 3
+		  for k = 0 to 15
 		    new_ga_p = new ga_picture
 		    
-		    for i = 0 to 127
-		      for j = 0 to 127
+		    for i = 0 to 63
+		      for j = 0 to 63
 		        new_ga_p.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		      next
 		    next
@@ -99,16 +99,16 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  dim i,j,k as integer
 		  
-		  for k = 0 to 3
-		    dim p as new picture(128,128,32)
+		  for k = 0 to 15
+		    dim p as new picture(64,64,32)
 		    
-		    for i = 0 to 127
-		      for j = 0 to 127
+		    for i = 0 to 63
+		      for j = 0 to 63
 		        p.RGBSurface.Pixel(i,j) = ga_pictures_array(k).picture(i,j)
 		      next
 		    next
 		    
-		    g.DrawPicture(p,148*(k mod 2)+20,148*(k \ 2)+20)
+		    g.DrawPicture(p,74*(k mod 4)+20,74*(k \ 4)+20)
 		  next
 		End Sub
 	#tag EndEvent
@@ -135,35 +135,35 @@ End
 		      return_colour = pic.picture(x-1,y)
 		    end
 		  end
-		  if x-1 > -1 and y +1 < 128 then
+		  if x-1 > -1 and y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
 		    if diff < min_diff then
 		      min_diff = diff
 		      return_colour = pic.picture(x-1,y+1)
 		    end
 		  end
-		  if y +1 < 128 then
+		  if y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
 		    if diff < min_diff then
 		      min_diff = diff
 		      return_colour = pic.picture(x,y+1)
 		    end
 		  end
-		  if x+1 < 128 and y +1 < 128 then
+		  if x+1 < 64 and y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
 		    if diff < min_diff then
 		      min_diff = diff
 		      return_colour = pic.picture(x+1,y+1)
 		    end
 		  end
-		  if x+1 < 128 then
+		  if x+1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
 		    if diff < min_diff then
 		      min_diff = diff
 		      return_colour = pic.picture(x+1,y)
 		    end
 		  end
-		  if x+1 < 128 and y -1 > -1 then
+		  if x+1 < 64 and y -1 > -1 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
 		    if diff < min_diff then
 		      min_diff = diff
@@ -213,8 +213,8 @@ End
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      if rnd < 0.5 then
 		        return_pic.picture(i,j) = p1.picture(i,j)
 		      else
@@ -233,8 +233,8 @@ End
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      if neighbours_diff(p1,i,j) < neighbours_diff(p2,i,j) then
 		        return_pic.picture(i,j) = p1.picture(i,j)
 		      else
@@ -254,8 +254,8 @@ End
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      c1 = closest_neighbour(p1,i,j)
 		      c2 = closest_neighbour(p2,i,j)
 		      if colour_diff(p1.picture(i,j),c1) < colour_diff(p2.picture(i,j),c2) then
@@ -277,8 +277,8 @@ End
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      c1 = furthest_neighbour(p1,i,j)
 		      c2 = furthest_neighbour(p2,i,j)
 		      if colour_diff(p1.picture(i,j),c1) > colour_diff(p2.picture(i,j),c2) then
@@ -300,8 +300,8 @@ End
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      c1 = closest_neighbour(p1,i,j)
 		      c2 = closest_neighbour(p2,i,j)
 		      f1 = furthest_neighbour(p1,i,j)
@@ -317,12 +317,6 @@ End
 		  return return_pic
 		  
 		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub evolveEnabled()
-		  
-		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -346,35 +340,35 @@ End
 		      return_colour = pic.picture(x-1,y)
 		    end
 		  end
-		  if x-1 > -1 and y +1 < 128 then
+		  if x-1 > -1 and y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
 		    if diff > max_diff then
 		      max_diff = diff
 		      return_colour = pic.picture(x-1,y+1)
 		    end
 		  end
-		  if y +1 < 128 then
+		  if y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
 		    if diff > max_diff then
 		      max_diff = diff
 		      return_colour = pic.picture(x,y+1)
 		    end
 		  end
-		  if x+1 < 128 and y +1 < 128 then
+		  if x+1 < 64 and y +1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
 		    if diff > max_diff then
 		      max_diff = diff
 		      return_colour = pic.picture(x+1,y+1)
 		    end
 		  end
-		  if x+1 < 128 then
+		  if x+1 < 64 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
 		    if diff > max_diff then
 		      max_diff = diff
 		      return_colour = pic.picture(x+1,y)
 		    end
 		  end
-		  if x+1 < 128 and y -1 > -1 then
+		  if x+1 < 64 and y -1 > -1 then
 		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
 		    if diff > max_diff then
 		      max_diff = diff
@@ -406,19 +400,19 @@ End
 		  if x-1 > -1 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y))
 		  end
-		  if x-1 > -1 and y +1 < 128 then
+		  if x-1 > -1 and y +1 < 64 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
 		  end
-		  if y +1 < 128 then
+		  if y +1 < 64 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x,y+1))
 		  end
-		  if x+1 < 128 and y +1 < 128 then
+		  if x+1 < 64 and y +1 < 64 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
 		  end
-		  if x+1 < 128 then
+		  if x+1 < 64 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y))
 		  end
-		  if x+1 < 128 and y -1 > -1 then
+		  if x+1 < 64 and y -1 > -1 then
 		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
 		  end
 		  if y -1 > -1 then
@@ -443,8 +437,8 @@ End
 		  max_g = 0
 		  max_b = 0
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      if pic.picture(i,j).red < min_r then
 		        min_r = pic.picture(i,j).red
 		      end
@@ -470,8 +464,8 @@ End
 		  g_ratio = (max_g-min_g)/255 
 		  b_ratio = (max_b-min_b)/255
 		  
-		  for i = 0 to 127
-		    for j = 0 to 127
+		  for i = 0 to 63
+		    for j = 0 to 63
 		      return_pic.picture(i,j) = rgb((pic.picture(i,j).red-min_r)/r_ratio,(pic.picture(i,j).green-min_g)/g_ratio,(pic.picture(i,j).blue-min_b)/b_ratio)
 		    next
 		  next

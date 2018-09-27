@@ -51,16 +51,21 @@ End
 		    keep = ga_pictures_array(k)
 		    ga_pictures_array.Remove(k)
 		    
-		    temp_ga_p_array.Append normalise(evolve(j,keep,keep))
+		    temp_ga_p_array.Append evolve(j,keep,keep)
 		    
 		    for i = 0 to UBound(ga_pictures_array)
-		      temp_ga_p_array.Append normalise(evolve(j,keep,ga_pictures_array(i)))
+		      temp_ga_p_array.Append evolve(j,keep,ga_pictures_array(i))
 		    next
+		    
+		    
+		    
+		    
+		    
 		    
 		    redim ga_pictures_array(-1)
 		    
 		    for i = 0 to UBound(temp_ga_p_array)
-		      ga_pictures_array.Append temp_ga_p_array(i)
+		      ga_pictures_array.Append normalise(temp_ga_p_array(i))
 		    next
 		    
 		    refresh
@@ -708,15 +713,5 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="dumpIndex"
-		Group="Behavior"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="keepIndex"
-		Group="Behavior"
-		Type="Integer"
 	#tag EndViewProperty
 #tag EndViewBehavior

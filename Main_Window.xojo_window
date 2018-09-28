@@ -32,12 +32,10 @@ End
 #tag WindowCode
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  dim i,j,k as integer
+		  dim i,k as integer
 		  dim xminus20, yminus20, xdiv74, ydiv74, xmod74, ymod74 as integer
 		  dim keep as ga_picture
 		  dim temp_ga_p_array(-1) as ga_picture
-		  
-		  j = 5
 		  
 		  xminus20 = x - 20
 		  yminus20 = y - 20
@@ -51,21 +49,16 @@ End
 		    keep = ga_pictures_array(k)
 		    ga_pictures_array.Remove(k)
 		    
-		    temp_ga_p_array.Append evolve(j,keep,keep)
+		    temp_ga_p_array.Append keep
 		    
 		    for i = 0 to UBound(ga_pictures_array)
-		      temp_ga_p_array.Append evolve(j,keep,ga_pictures_array(i))
+		      temp_ga_p_array.Append breed(keep,ga_pictures_array(i))
 		    next
-		    
-		    
-		    
-		    
-		    
 		    
 		    redim ga_pictures_array(-1)
 		    
 		    for i = 0 to UBound(temp_ga_p_array)
-		      ga_pictures_array.Append normalise(temp_ga_p_array(i))
+		      ga_pictures_array.Append normalise(evolve(1,temp_ga_p_array(i)))
 		    next
 		    
 		    refresh
@@ -113,6 +106,26 @@ End
 		End Sub
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h0
+		Function breed(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		  dim i,j as integer
+		  dim return_pic As new ga_picture
+		  
+		  for i = 0 to 63
+		    for j = 0 to 63
+		      if rnd < 0.75 then
+		        return_pic.picture(i,j) = p1.picture(i,j)
+		      else
+		        return_pic.picture(i,j) = p2.picture(i,j)
+		      end
+		    next
+		  next
+		  
+		  return return_pic
+		  
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function closest_neighbour(pic as ga_picture, x as integer, y as integer) As color
@@ -191,125 +204,19 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function evolve(evolve_method as integer, p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  Select case evolve_method
-		  case 1
-		    return evolve1(p1,p2)
-		  case 2
-		    return evolve2(p1,p2)
-		  case 3
-		    return evolve3(p1,p2)
-		  case 4
-		    return evolve4(p1,p2)
-		  case 5
-		    return evolve5(p1,p2)
-		  end select
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve1(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		Function evolve(iterations as integer, pic as ga_picture) As ga_picture
+		  dim c,f as color
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
-		      if rnd < 0.5 then
-		        return_pic.picture(i,j) = p1.picture(i,j)
+		      c = closest_neighbour(pic,i,j)
+		      f = furthest_neighbour(pic,i,j)
+		      if colour_diff(c,pic.picture(i,j)) > colour_diff(f,pic.picture(i,j)) then
+		        return_pic.picture(i,j) = c
 		      else
-		        return_pic.picture(i,j) = p2.picture(i,j)
-		      end
-		    next
-		  next
-		  
-		  return return_pic
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve2(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  dim i,j as integer
-		  dim return_pic As new ga_picture
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      if neighbours_diff(p1,i,j) < neighbours_diff(p2,i,j) then
-		        return_pic.picture(i,j) = p1.picture(i,j)
-		      else
-		        return_pic.picture(i,j) = p2.picture(i,j)
-		      end
-		    next
-		  next
-		  
-		  return return_pic
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve3(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  dim c1,c2 as color
-		  dim i,j as integer
-		  dim return_pic As new ga_picture
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      c1 = closest_neighbour(p1,i,j)
-		      c2 = closest_neighbour(p2,i,j)
-		      if colour_diff(p1.picture(i,j),c1) < colour_diff(p2.picture(i,j),c2) then
-		        return_pic.picture(i,j) = c1
-		      else
-		        return_pic.picture(i,j) = c2
-		      end
-		    next
-		  next
-		  
-		  return return_pic
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve4(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  dim c1,c2 as color
-		  dim i,j as integer
-		  dim return_pic As new ga_picture
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      c1 = furthest_neighbour(p1,i,j)
-		      c2 = furthest_neighbour(p2,i,j)
-		      if colour_diff(p1.picture(i,j),c1) > colour_diff(p2.picture(i,j),c2) then
-		        return_pic.picture(i,j) = c1
-		      else
-		        return_pic.picture(i,j) = c2
-		      end
-		    next
-		  next
-		  
-		  return return_pic
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve5(p1 as ga_picture, p2 as ga_picture) As ga_picture
-		  dim c1,c2,f1,f2 as color
-		  dim i,j as integer
-		  dim return_pic As new ga_picture
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      c1 = closest_neighbour(p1,i,j)
-		      c2 = closest_neighbour(p2,i,j)
-		      f1 = furthest_neighbour(p1,i,j)
-		      f2 = furthest_neighbour(p2,i,j)
-		      if colour_diff(c1,f1) > colour_diff(c2,f2) then
-		        return_pic.picture(i,j) = c2
-		      else
-		        return_pic.picture(i,j) = c1
+		        return_pic.picture(i,j) = f
 		      end
 		    next
 		  next

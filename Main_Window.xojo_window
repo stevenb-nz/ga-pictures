@@ -58,7 +58,7 @@ End
 		    redim ga_pictures_array(-1)
 		    
 		    for i = 0 to UBound(temp_ga_p_array)
-		      ga_pictures_array.Append normalise(evolve(1,temp_ga_p_array(i)))
+		      ga_pictures_array.Append normalise(evolve(temp_ga_p_array(i)))
 		    next
 		    
 		    refresh
@@ -82,7 +82,7 @@ End
 		      next
 		    next
 		    
-		    ga_pictures_array.Append new_ga_p
+		    ga_pictures_array.Append evolve(new_ga_p)
 		  next
 		  
 		End Sub
@@ -114,10 +114,14 @@ End
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
-		      if rnd < 0.75 then
-		        return_pic.picture(i,j) = p1.picture(i,j)
+		      if p1.picture(i,j) = p2.picture(i,j) then
+		        return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		      else
-		        return_pic.picture(i,j) = p2.picture(i,j)
+		        if rnd < 0.75 then
+		          return_pic.picture(i,j) = p1.picture(i,j)
+		        else
+		          return_pic.picture(i,j) = p2.picture(i,j)
+		        end
 		      end
 		    next
 		  next
@@ -204,129 +208,28 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function evolve(iterations as integer, pic as ga_picture) As ga_picture
-		  dim c,f as color
-		  dim i,j as integer
+		Function evolve(pic as ga_picture) As ga_picture
+		  dim c as color
+		  dim i,j,k as integer
 		  dim return_pic As new ga_picture
+		  dim temp_pic As new ga_picture
 		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      c = closest_neighbour(pic,i,j)
-		      f = furthest_neighbour(pic,i,j)
-		      if colour_diff(c,pic.picture(i,j)) > colour_diff(f,pic.picture(i,j)) then
-		        return_pic.picture(i,j) = c
-		      else
-		        return_pic.picture(i,j) = f
-		      end
+		  temp_pic = pic
+		  for k = 1 to 5
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        c = closest_neighbour(temp_pic,i,j)
+		        if colour_diff(c,temp_pic.picture(i,j)) = 0 then
+		          return_pic.picture(i,j) = temp_pic.picture(i,j)
+		        else
+		          return_pic.picture(i,j) = c
+		        end
+		      next
 		    next
+		    temp_pic = return_pic
 		  next
 		  
 		  return return_pic
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function furthest_neighbour(pic as ga_picture, x as integer, y as integer) As color
-		  dim diff,max_diff as integer
-		  dim return_colour as color
-		  
-		  max_diff = -1
-		  
-		  if x-1 > -1 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y-1)
-		    end
-		  end
-		  if x-1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y)
-		    end
-		  end
-		  if x-1 > -1 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y+1)
-		    end
-		  end
-		  if y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x,y+1)
-		    end
-		  end
-		  if x+1 < 64 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y+1)
-		    end
-		  end
-		  if x+1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y)
-		    end
-		  end
-		  if x+1 < 64 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y-1)
-		    end
-		  end
-		  if y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x,y-1)
-		    end
-		  end
-		  
-		  return return_colour
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function neighbours_diff(pic as ga_picture, x as integer, y as integer) As integer
-		  dim return_value as integer
-		  
-		  return_value = 0
-		  
-		  if x-1 > -1 and y -1 > -1 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
-		  end
-		  if x-1 > -1 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y))
-		  end
-		  if x-1 > -1 and y +1 < 64 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
-		  end
-		  if y +1 < 64 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x,y+1))
-		  end
-		  if x+1 < 64 and y +1 < 64 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
-		  end
-		  if x+1 < 64 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y))
-		  end
-		  if x+1 < 64 and y -1 > -1 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
-		  end
-		  if y -1 > -1 then
-		    return_value = return_value + colour_diff(pic.picture(x,y),pic.picture(x,y-1))
-		  end
-		  
-		  return return_value
 		  
 		End Function
 	#tag EndMethod

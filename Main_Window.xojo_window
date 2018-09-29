@@ -114,7 +114,7 @@ End
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
-		      if p1.picture(i,j) = p2.picture(i,j) then
+		      if p1.picture(i,j) = p2.picture(i,j) and rnd < 0.25 then
 		        return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		      else
 		        if rnd < 0.75 then
@@ -209,7 +209,7 @@ End
 
 	#tag Method, Flags = &h0
 		Function evolve(pic as ga_picture) As ga_picture
-		  dim c as color
+		  dim c,f as color
 		  dim i,j,k as integer
 		  dim return_pic As new ga_picture
 		  dim temp_pic As new ga_picture
@@ -219,8 +219,9 @@ End
 		    for i = 0 to 63
 		      for j = 0 to 63
 		        c = closest_neighbour(temp_pic,i,j)
-		        if colour_diff(c,temp_pic.picture(i,j)) = 0 then
-		          return_pic.picture(i,j) = temp_pic.picture(i,j)
+		        f = furthest_neighbour(temp_pic,i,j)
+		        if colour_diff(f,temp_pic.picture(i,j)) = 0 then
+		          return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		        else
 		          return_pic.picture(i,j) = c
 		        end
@@ -230,6 +231,75 @@ End
 		  next
 		  
 		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function furthest_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim diff,max_diff as integer
+		  dim return_colour as color
+		  
+		  max_diff = -1
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 64 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 64 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 64 and y +1 < 64 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 64 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 64 and y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		    if diff > max_diff then
+		      max_diff = diff
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
 		  
 		End Function
 	#tag EndMethod

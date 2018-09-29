@@ -58,7 +58,8 @@ End
 		    redim ga_pictures_array(-1)
 		    
 		    for i = 0 to UBound(temp_ga_p_array)
-		      ga_pictures_array.Append normalise(evolve(temp_ga_p_array(i)))
+		      evolve(temp_ga_p_array(i)).normalise
+		      ga_pictures_array.Append temp_ga_p_array(i)
 		    next
 		    
 		    refresh
@@ -314,60 +315,6 @@ End
 		  end
 		  
 		  return return_colour
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function normalise(pic as ga_picture) As ga_picture
-		  dim return_pic as new ga_picture
-		  dim i,j,min_r,max_r,min_g,max_g,min_b,max_b as integer
-		  dim r_ratio, g_ratio, b_ratio as double
-		  
-		  min_r = 255
-		  min_g = 255
-		  min_b = 255
-		  max_r = 0 
-		  max_g = 0
-		  max_b = 0
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      if pic.picture(i,j).red < min_r then
-		        min_r = pic.picture(i,j).red
-		      end
-		      if pic.picture(i,j).red > max_r then
-		        max_r = pic.picture(i,j).red
-		      end
-		      if pic.picture(i,j).green < min_g then
-		        min_g = pic.picture(i,j).green
-		      end
-		      if pic.picture(i,j).green > max_g then
-		        max_g = pic.picture(i,j).green
-		      end
-		      if pic.picture(i,j).red < min_b then
-		        min_b = pic.picture(i,j).red
-		      end
-		      if pic.picture(i,j).blue > max_b then
-		        max_b = pic.picture(i,j).blue
-		      end
-		    next
-		  next
-		  
-		  r_ratio = (max_r-min_r)/255
-		  g_ratio = (max_g-min_g)/255 
-		  b_ratio = (max_b-min_b)/255
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      return_pic.picture(i,j) = rgb((pic.picture(i,j).red-min_r)/r_ratio,(pic.picture(i,j).green-min_g)/g_ratio,(pic.picture(i,j).blue-min_b)/b_ratio)
-		    next
-		  next
-		  return_pic.evolve_iterations = pic.evolve_iterations
-		  return_pic.dominant_ratio = pic.dominant_ratio
-		  return_pic.mutate_ratio = pic.mutate_ratio
-		  
-		  return return_pic
 		  
 		End Function
 	#tag EndMethod

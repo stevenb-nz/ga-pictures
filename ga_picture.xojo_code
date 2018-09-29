@@ -20,6 +20,56 @@ Protected Class ga_picture
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub normalise()
+		  dim i,j,min_r,max_r,min_g,max_g,min_b,max_b as integer
+		  dim r_ratio, g_ratio, b_ratio as double
+		  
+		  min_r = 255
+		  min_g = 255
+		  min_b = 255
+		  max_r = 0 
+		  max_g = 0
+		  max_b = 0
+		  
+		  for i = 0 to 63
+		    for j = 0 to 63
+		      if picture(i,j).red < min_r then
+		        min_r = picture(i,j).red
+		      end
+		      if picture(i,j).red > max_r then
+		        max_r = picture(i,j).red
+		      end
+		      if picture(i,j).green < min_g then
+		        min_g = picture(i,j).green
+		      end
+		      if picture(i,j).green > max_g then
+		        max_g = picture(i,j).green
+		      end
+		      if picture(i,j).red < min_b then
+		        min_b = picture(i,j).red
+		      end
+		      if picture(i,j).blue > max_b then
+		        max_b = picture(i,j).blue
+		      end
+		    next
+		  next
+		  
+		  r_ratio = (max_r-min_r)/255
+		  g_ratio = (max_g-min_g)/255 
+		  b_ratio = (max_b-min_b)/255
+		  
+		  if r_ratio + g_ratio + b_ratio < 3 then
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        picture(i,j) = rgb((picture(i,j).red-min_r)/r_ratio,(picture(i,j).green-min_g)/g_ratio,(picture(i,j).blue-min_b)/b_ratio)
+		      next
+		    next
+		  end
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		dominant_ratio As double
@@ -76,6 +126,16 @@ Protected Class ga_picture
 			Name="evolve_iterations"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="dominant_ratio"
+			Group="Behavior"
+			Type="double"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="mutate_ratio"
+			Group="Behavior"
+			Type="double"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

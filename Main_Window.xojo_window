@@ -82,7 +82,9 @@ End
 		      next
 		    next
 		    
-		    new_ga_p.evolve_iterations = 4
+		    new_ga_p.evolve_iterations = ceil(rnd*9)
+		    new_ga_p.dominant_ratio = rnd/2 + 0.5
+		    new_ga_p.mutate_ratio = rnd
 		    
 		    ga_pictures_array.Append evolve(new_ga_p)
 		  next
@@ -112,16 +114,20 @@ End
 	#tag Method, Flags = &h0
 		Function breed(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
+		  dim dr as double
 		  dim return_pic As new ga_picture
 		  
-		  return_pic.evolve_iterations = ceil(p1.evolve_iterations*0.75 + p2.evolve_iterations*0.25)
+		  dr = p1.dominant_ratio
+		  return_pic.evolve_iterations = ceil(p1.evolve_iterations*dr + p2.evolve_iterations*(1-dr))
+		  return_pic.dominant_ratio = p1.dominant_ratio*dr + p2.dominant_ratio*(1-dr)
+		  return_pic.mutate_ratio = p1.mutate_ratio*dr + p2.mutate_ratio*(1-dr)
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
-		      if p1.picture(i,j) = p2.picture(i,j) and rnd < 0.25 then
+		      if p1.picture(i,j) = p2.picture(i,j) and rnd < return_pic.mutate_ratio then
 		        return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		      else
-		        if rnd < 0.75 then
+		        if rnd < return_pic.dominant_ratio then
 		          return_pic.picture(i,j) = p1.picture(i,j)
 		        else
 		          return_pic.picture(i,j) = p2.picture(i,j)
@@ -233,6 +239,8 @@ End
 		      next
 		    next
 		    return_pic.evolve_iterations = temp_pic.evolve_iterations
+		    return_pic.dominant_ratio = temp_pic.dominant_ratio
+		    return_pic.mutate_ratio = temp_pic.mutate_ratio
 		    temp_pic = return_pic.clone
 		  next
 		  
@@ -356,6 +364,8 @@ End
 		    next
 		  next
 		  return_pic.evolve_iterations = pic.evolve_iterations
+		  return_pic.dominant_ratio = pic.dominant_ratio
+		  return_pic.mutate_ratio = pic.mutate_ratio
 		  
 		  return return_pic
 		  

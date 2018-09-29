@@ -6,6 +6,8 @@ Protected Class ga_picture
 		  dim i,j as integer
 		  
 		  copy.evolve_iterations = evolve_iterations
+		  copy.dominant_ratio = dominant_ratio
+		  copy.mutate_ratio = mutate_ratio
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
@@ -20,7 +22,15 @@ Protected Class ga_picture
 
 
 	#tag Property, Flags = &h0
+		dominant_ratio As double
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		evolve_iterations As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		mutate_ratio As double
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

@@ -82,6 +82,8 @@ End
 		      next
 		    next
 		    
+		    new_ga_p.evolve_iterations = 4
+		    
 		    ga_pictures_array.Append evolve(new_ga_p)
 		  next
 		  
@@ -111,6 +113,8 @@ End
 		Function breed(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
 		  dim return_pic As new ga_picture
+		  
+		  return_pic.evolve_iterations = ceil(p1.evolve_iterations*0.75 + p2.evolve_iterations*0.25)
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
@@ -214,8 +218,9 @@ End
 		  dim return_pic As new ga_picture
 		  dim temp_pic As new ga_picture
 		  
-		  temp_pic = pic
-		  for k = 1 to 5
+		  temp_pic = pic.clone
+		  
+		  for k = 1 to pic.evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
 		        c = closest_neighbour(temp_pic,i,j)
@@ -227,7 +232,8 @@ End
 		        end
 		      next
 		    next
-		    temp_pic = return_pic
+		    return_pic.evolve_iterations = temp_pic.evolve_iterations
+		    temp_pic = return_pic.clone
 		  next
 		  
 		  return return_pic
@@ -349,6 +355,7 @@ End
 		      return_pic.picture(i,j) = rgb((pic.picture(i,j).red-min_r)/r_ratio,(pic.picture(i,j).green-min_g)/g_ratio,(pic.picture(i,j).blue-min_b)/b_ratio)
 		    next
 		  next
+		  return_pic.evolve_iterations = pic.evolve_iterations
 		  
 		  return return_pic
 		  

@@ -21,6 +21,34 @@ Protected Class ga_picture
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub evolve()
+		  dim c,f as color
+		  dim i,j,k as integer
+		  dim temp_pic As new ga_picture
+		  
+		  for k = 1 to evolve_iterations
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        c = Main_Window.closest_neighbour(me,i,j)
+		        f = Main_Window.furthest_neighbour(me,i,j)
+		        if Main_Window.colour_diff(f,picture(i,j)) = 0 then
+		          temp_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
+		        else
+		          temp_pic.picture(i,j) = c
+		        end
+		      next
+		    next
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        picture(i,j) = temp_pic.picture(i,j)
+		      next
+		    next
+		  next
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub normalise()
 		  dim i,j,min_r,max_r,min_g,max_g,min_b,max_b as integer
 		  dim r_ratio, g_ratio, b_ratio as double

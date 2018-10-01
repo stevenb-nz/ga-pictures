@@ -58,7 +58,8 @@ End
 		    redim ga_pictures_array(-1)
 		    
 		    for i = 0 to UBound(temp_ga_p_array)
-		      evolve(temp_ga_p_array(i)).normalise
+		      temp_ga_p_array(i).evolve
+		      temp_ga_p_array(i).normalise
 		      ga_pictures_array.Append temp_ga_p_array(i)
 		    next
 		    
@@ -87,7 +88,9 @@ End
 		    new_ga_p.dominant_ratio = rnd/2 + 0.5
 		    new_ga_p.mutate_ratio = rnd
 		    
-		    ga_pictures_array.Append evolve(new_ga_p)
+		    new_ga_p.evolve
+		    
+		    ga_pictures_array.Append new_ga_p
 		  next
 		  
 		End Sub
@@ -214,38 +217,6 @@ End
 	#tag Method, Flags = &h0
 		Function colour_diff(c1 as Color, c2 as Color) As integer
 		  return abs(c1.Red-c2.Red)+abs(c1.green-c2.green)+abs(c1.blue-c2.blue)
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function evolve(pic as ga_picture) As ga_picture
-		  dim c,f as color
-		  dim i,j,k as integer
-		  dim return_pic As new ga_picture
-		  dim temp_pic As new ga_picture
-		  
-		  temp_pic = pic.clone
-		  
-		  for k = 1 to pic.evolve_iterations
-		    for i = 0 to 63
-		      for j = 0 to 63
-		        c = closest_neighbour(temp_pic,i,j)
-		        f = furthest_neighbour(temp_pic,i,j)
-		        if colour_diff(f,temp_pic.picture(i,j)) = 0 then
-		          return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
-		        else
-		          return_pic.picture(i,j) = c
-		        end
-		      next
-		    next
-		    return_pic.evolve_iterations = temp_pic.evolve_iterations
-		    return_pic.dominant_ratio = temp_pic.dominant_ratio
-		    return_pic.mutate_ratio = temp_pic.mutate_ratio
-		    temp_pic = return_pic.clone
-		  next
-		  
-		  return return_pic
 		  
 		End Function
 	#tag EndMethod

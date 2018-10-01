@@ -72,27 +72,7 @@ End
 
 	#tag Event
 		Sub Open()
-		  dim i,j,k as integer
-		  dim new_ga_p as ga_picture
-		  
-		  for k = 0 to 15
-		    new_ga_p = new ga_picture
-		    
-		    for i = 0 to 63
-		      for j = 0 to 63
-		        new_ga_p.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
-		      next
-		    next
-		    
-		    new_ga_p.evolve_iterations = ceil(rnd*4)
-		    new_ga_p.dominant_ratio = rnd/2 + 0.5
-		    new_ga_p.mutate_ratio = rnd
-		    
-		    new_ga_p.evolve
-		    
-		    ga_pictures_array.Append new_ga_p
-		  next
-		  
+		  reset
 		End Sub
 	#tag EndEvent
 
@@ -113,6 +93,16 @@ End
 		  next
 		End Sub
 	#tag EndEvent
+
+
+	#tag MenuHandler
+		Function FileReset() As Boolean Handles FileReset.Action
+			reset
+			Refresh
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
 
 
 	#tag Method, Flags = &h0
@@ -426,6 +416,33 @@ End
 		  return return_colour
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub reset()
+		  dim i,j,k as integer
+		  dim new_ga_p as ga_picture
+		  redim ga_pictures_array(-1)
+		  
+		  for k = 0 to 15
+		    new_ga_p = new ga_picture
+		    
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        new_ga_p.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
+		      next
+		    next
+		    
+		    new_ga_p.evolve_iterations = ceil(rnd*4)
+		    new_ga_p.dominant_ratio = rnd/2 + 0.5
+		    new_ga_p.mutate_ratio = rnd
+		    
+		    new_ga_p.evolve
+		    
+		    ga_pictures_array.Append new_ga_p
+		  next
+		  
+		End Sub
 	#tag EndMethod
 
 

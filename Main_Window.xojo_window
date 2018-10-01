@@ -36,6 +36,7 @@ End
 		  dim xminus20, yminus20, xdiv74, ydiv74, xmod74, ymod74 as integer
 		  dim keep as ga_picture
 		  dim temp_ga_p_array(-1) as ga_picture
+		  dim c as new Clipboard
 		  
 		  xminus20 = x - 20
 		  yminus20 = y - 20
@@ -45,6 +46,8 @@ End
 		  ymod74= yminus20 mod 74
 		  if xmod74 > 0 and xmod74 < 65 and ymod74 > 0 and ymod74 < 65 then
 		    k = xdiv74 + ydiv74*4
+		    
+		    c.Picture = ga_pictures_array(k).pic
 		    
 		    keep = ga_pictures_array(k)
 		    ga_pictures_array.Remove(k)
@@ -81,16 +84,9 @@ End
 		  dim i,j,k as integer
 		  
 		  for k = 0 to 15
-		    dim p as new picture(64,64,32)
-		    
-		    for i = 0 to 63
-		      for j = 0 to 63
-		        p.RGBSurface.Pixel(i,j) = ga_pictures_array(k).picture(i,j)
-		      next
-		    next
-		    
-		    g.DrawPicture(p,74*(k mod 4)+20,74*(k \ 4)+20)
+		    g.DrawPicture(ga_pictures_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)
 		  next
+		  
 		End Sub
 	#tag EndEvent
 

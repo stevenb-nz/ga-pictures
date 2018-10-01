@@ -118,6 +118,22 @@ Protected Class ga_picture
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function pic() As Picture
+		  dim i,j as Integer
+		  dim p as new picture(64,64,32)
+		  
+		  for i = 0 to 63
+		    for j = 0 to 63
+		      p.RGBSurface.Pixel(i,j) = picture(i,j)
+		    next
+		  next
+		  
+		  return p
+		  
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		dominant_ratio As double

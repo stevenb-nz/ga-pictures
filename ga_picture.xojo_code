@@ -22,8 +22,8 @@ Protected Class ga_picture
 
 	#tag Method, Flags = &h0
 		Sub evolve()
-		  dim c,f as color
-		  dim i,j,k as integer
+		  dim b,c,d,f as color
+		  dim bb,dd,i,j,k as integer
 		  dim temp_pic As new ga_picture
 		  
 		  for k = 1 to evolve_iterations
@@ -35,6 +35,26 @@ Protected Class ga_picture
 		          temp_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
 		        else
 		          temp_pic.picture(i,j) = c
+		        end
+		      next
+		    next
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        picture(i,j) = temp_pic.picture(i,j)
+		      next
+		    next
+		  next
+		  for k = 1 to evolve_iterations
+		    for i = 0 to 63
+		      for j = 0 to 63
+		        b = Main_Window.brightest_neighbour(me,i,j)
+		        bb = b.Red + b.Green + b.Blue
+		        d = Main_Window.darkest_neighbour(me,i,j)
+		        dd = d.Red + d.Green + d.blue
+		        if 255-bb < dd then
+		          temp_pic.picture(i,j) = b
+		        else
+		          temp_pic.picture(i,j) = d
 		        end
 		      next
 		    next

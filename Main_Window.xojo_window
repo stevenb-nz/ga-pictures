@@ -84,7 +84,7 @@ End
 		      next
 		    next
 		    
-		    new_ga_p.evolve_iterations = ceil(rnd*9)
+		    new_ga_p.evolve_iterations = ceil(rnd*4)
 		    new_ga_p.dominant_ratio = rnd/2 + 0.5
 		    new_ga_p.mutate_ratio = rnd
 		    
@@ -141,6 +141,75 @@ End
 		  next
 		  
 		  return return_pic
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function brightest_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim brightest, how_bright as integer
+		  dim return_colour as color
+		  
+		  brightest = -1
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    how_bright = pic.picture(x-1,y-1).red + pic.picture(x-1,y-1).green + pic.picture(x-1,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    how_bright = pic.picture(x-1,y).red + pic.picture(x-1,y).green + pic.picture(x-1,y).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 64 then
+		    how_bright = pic.picture(x-1,y+1).red + pic.picture(x-1,y+1).green + pic.picture(x-1,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 64 then
+		    how_bright = pic.picture(x,y+1).red + pic.picture(x,y+1).green + pic.picture(x,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 64 and y +1 < 64 then
+		    how_bright = pic.picture(x+1,y+1).red + pic.picture(x+1,y+1).green + pic.picture(x+1,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 64 then
+		    how_bright = pic.picture(x+1,y).red + pic.picture(x+1,y).green + pic.picture(x+1,y).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 64 and y -1 > -1 then
+		    how_bright = pic.picture(x+1,y-1).red + pic.picture(x+1,y-1).green + pic.picture(x+1,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    how_bright = pic.picture(x,y-1).red + pic.picture(x,y-1).green + pic.picture(x,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
 		  
 		End Function
 	#tag EndMethod
@@ -217,6 +286,75 @@ End
 	#tag Method, Flags = &h0
 		Function colour_diff(c1 as Color, c2 as Color) As integer
 		  return abs(c1.Red-c2.Red)+abs(c1.green-c2.green)+abs(c1.blue-c2.blue)
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function darkest_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim darkest, how_dark as integer
+		  dim return_colour as color
+		  
+		  darkest = 765
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    how_dark = pic.picture(x-1,y-1).red + pic.picture(x-1,y-1).green + pic.picture(x-1,y-1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    how_dark = pic.picture(x-1,y).red + pic.picture(x-1,y).green + pic.picture(x-1,y).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 64 then
+		    how_dark = pic.picture(x-1,y+1).red + pic.picture(x-1,y+1).green + pic.picture(x-1,y+1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 64 then
+		    how_dark = pic.picture(x,y+1).red + pic.picture(x,y+1).green + pic.picture(x,y+1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 64 and y +1 < 64 then
+		    how_dark = pic.picture(x+1,y+1).red + pic.picture(x+1,y+1).green + pic.picture(x+1,y+1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 64 then
+		    how_dark = pic.picture(x+1,y).red + pic.picture(x+1,y).green + pic.picture(x+1,y).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 64 and y -1 > -1 then
+		    how_dark = pic.picture(x+1,y-1).red + pic.picture(x+1,y-1).green + pic.picture(x+1,y-1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    how_dark = pic.picture(x,y-1).red + pic.picture(x,y-1).green + pic.picture(x,y-1).blue
+		    if darkest > how_dark then
+		      darkest = how_dark
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
 		  
 		End Function
 	#tag EndMethod

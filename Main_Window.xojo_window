@@ -111,6 +111,11 @@ End
 		  return_pic.evolve_iterations = ceil(p1.evolve_iterations*dr + p2.evolve_iterations*(1-dr))
 		  return_pic.dominant_ratio = p1.dominant_ratio*dr + p2.dominant_ratio*(1-dr)
 		  return_pic.mutate_ratio = p1.mutate_ratio*dr + p2.mutate_ratio*(1-dr)
+		  if p1.dorb xor p2.dorb then
+		    return_pic.dorb = p1.dorb
+		  else
+		    return_pic.dorb = not p1.dorb
+		  end
 		  
 		  for i = 0 to 63
 		    for j = 0 to 63
@@ -432,8 +437,14 @@ End
 		    new_ga_p.evolve_iterations = ceil(rnd*4)
 		    new_ga_p.dominant_ratio = rnd/2 + 0.5
 		    new_ga_p.mutate_ratio = rnd
+		    if rnd < 0.5 then
+		      new_ga_p.dorb = false
+		    else
+		      new_ga_p.dorb = true
+		    end
 		    
 		    new_ga_p.evolve
+		    new_ga_p.normalise
 		    
 		    ga_pictures_array.Append new_ga_p
 		  next

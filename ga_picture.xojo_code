@@ -25,7 +25,6 @@ Protected Class ga_picture
 		  dim b,c,d,f as color
 		  dim bb,dd,i,j,k as integer
 		  dim temp_pic As new ga_picture
-		  dim dorb as Boolean
 		  
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
@@ -45,11 +44,6 @@ Protected Class ga_picture
 		      next
 		    next
 		  next
-		  if rnd < 0.5 then
-		    dorb = true
-		  else
-		    dorb = false
-		  end
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
@@ -143,6 +137,10 @@ Protected Class ga_picture
 
 	#tag Property, Flags = &h0
 		dominant_ratio As double
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		dorb As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

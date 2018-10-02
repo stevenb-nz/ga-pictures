@@ -25,6 +25,7 @@ Protected Class ga_picture
 		  dim b,c,d,f as color
 		  dim bb,dd,i,j,k as integer
 		  dim temp_pic As new ga_picture
+		  dim dorb as Boolean
 		  
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
@@ -44,6 +45,11 @@ Protected Class ga_picture
 		      next
 		    next
 		  next
+		  if rnd < 0.5 then
+		    dorb = true
+		  else
+		    dorb = false
+		  end
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
@@ -51,7 +57,7 @@ Protected Class ga_picture
 		        bb = b.Red + b.Green + b.Blue
 		        d = Main_Window.darkest_neighbour(me,i,j)
 		        dd = d.Red + d.Green + d.blue
-		        if 255-bb < dd then
+		        if (255-bb < dd) xor dorb then
 		          temp_pic.picture(i,j) = b
 		        else
 		          temp_pic.picture(i,j) = d

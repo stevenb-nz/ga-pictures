@@ -420,6 +420,75 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		  dim mp, mp_temp as integer
+		  dim return_colour as color
+		  
+		  mp = 128
+		  
+		  if x-1 > -1 and y -1 > -1 then
+		    how_bright = pic.picture(x-1,y-1).red + pic.picture(x-1,y-1).green + pic.picture(x-1,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y-1)
+		    end
+		  end
+		  if x-1 > -1 then
+		    how_bright = pic.picture(x-1,y).red + pic.picture(x-1,y).green + pic.picture(x-1,y).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y)
+		    end
+		  end
+		  if x-1 > -1 and y +1 < 64 then
+		    how_bright = pic.picture(x-1,y+1).red + pic.picture(x-1,y+1).green + pic.picture(x-1,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x-1,y+1)
+		    end
+		  end
+		  if y +1 < 64 then
+		    how_bright = pic.picture(x,y+1).red + pic.picture(x,y+1).green + pic.picture(x,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x,y+1)
+		    end
+		  end
+		  if x+1 < 64 and y +1 < 64 then
+		    how_bright = pic.picture(x+1,y+1).red + pic.picture(x+1,y+1).green + pic.picture(x+1,y+1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y+1)
+		    end
+		  end
+		  if x+1 < 64 then
+		    how_bright = pic.picture(x+1,y).red + pic.picture(x+1,y).green + pic.picture(x+1,y).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y)
+		    end
+		  end
+		  if x+1 < 64 and y -1 > -1 then
+		    how_bright = pic.picture(x+1,y-1).red + pic.picture(x+1,y-1).green + pic.picture(x+1,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x+1,y-1)
+		    end
+		  end
+		  if y -1 > -1 then
+		    how_bright = pic.picture(x,y-1).red + pic.picture(x,y-1).green + pic.picture(x,y-1).blue
+		    if brightest < how_bright then
+		      brightest = how_bright
+		      return_colour = pic.picture(x,y-1)
+		    end
+		  end
+		  
+		  return return_colour
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub reset()
 		  dim i,j,k as integer
 		  dim new_ga_p as ga_picture

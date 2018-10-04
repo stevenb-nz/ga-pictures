@@ -1,29 +1,9 @@
 #tag Class
 Protected Class ga_picture
 	#tag Method, Flags = &h0
-		Function clone() As ga_picture
-		  dim copy as new ga_picture
-		  dim i,j as integer
-		  
-		  copy.evolve_iterations = evolve_iterations
-		  copy.dominant_ratio = dominant_ratio
-		  copy.mutate_ratio = mutate_ratio
-		  
-		  for i = 0 to 63
-		    for j = 0 to 63
-		      copy.picture(i,j) = picture(i,j)
-		    next
-		  next
-		  
-		  return copy
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub evolve()
-		  dim b,c,d,f as color
-		  dim bb,dd,i,j,k as integer
+		  dim c,f as color
+		  dim i,j,k as integer
 		  dim temp_pic As new ga_picture
 		  
 		  for k = 1 to evolve_iterations
@@ -56,26 +36,6 @@ Protected Class ga_picture
 		      next
 		    next
 		  next
-		  'for k = 1 to evolve_iterations
-		  'for i = 0 to 63
-		  'for j = 0 to 63
-		  'b = Main_Window.brightest_neighbour(me,i,j)
-		  'bb = b.Red + b.Green + b.Blue
-		  'd = Main_Window.darkest_neighbour(me,i,j)
-		  'dd = d.Red + d.Green + d.blue
-		  'if (255-bb < dd) xor dorb then
-		  'temp_pic.picture(i,j) = b
-		  'else
-		  'temp_pic.picture(i,j) = d
-		  'end
-		  'next
-		  'next
-		  'for i = 0 to 63
-		  'for j = 0 to 63
-		  'picture(i,j) = temp_pic.picture(i,j)
-		  'next
-		  'next
-		  'next
 		  
 		End Sub
 	#tag EndMethod
@@ -149,10 +109,6 @@ Protected Class ga_picture
 
 	#tag Property, Flags = &h0
 		dominant_ratio As double
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		dorb As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

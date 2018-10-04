@@ -421,14 +421,20 @@ End
 
 	#tag Method, Flags = &h0
 		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
-		  dim mp, mp_temp as integer
+		  dim mp, mp_temp,cc,mc,yc,rc,gc,bc as integer
 		  dim temp_colour, return_colour as color
 		  
 		  mp = 128
 		  
 		  if x-1 > -1 and y -1 > -1 then
 		    temp_colour = pic.picture(x-1,y-1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -436,7 +442,13 @@ End
 		  end
 		  if x-1 > -1 then
 		    temp_colour = pic.picture(x-1,y)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -444,7 +456,13 @@ End
 		  end
 		  if x-1 > -1 and y +1 < 64 then
 		    temp_colour = pic.picture(x-1,y+1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -452,7 +470,13 @@ End
 		  end
 		  if y +1 < 64 then
 		    temp_colour = pic.picture(x,y+1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -460,7 +484,13 @@ End
 		  end
 		  if x+1 < 64 and y +1 < 64 then
 		    temp_colour = pic.picture(x+1,y+1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -468,7 +498,13 @@ End
 		  end
 		  if x+1 < 64 then
 		    temp_colour = pic.picture(x+1,y)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -476,7 +512,13 @@ End
 		  end
 		  if x+1 < 64 and y -1 > -1 then
 		    temp_colour = pic.picture(x+1,y-1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour
@@ -484,7 +526,13 @@ End
 		  end
 		  if y -1 > -1 then
 		    temp_colour = pic.picture(x,y-1)
-		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    cc = temp_colour.red + (255 - temp_colour.green) + (255 - temp_colour.blue)
+		    mc = (255 - temp_colour.red) + temp_colour.green + (255 - temp_colour.blue)
+		    yc = (255 - temp_colour.red) + (255 - temp_colour.green) + temp_colour.blue
+		    rc = (255 - temp_colour.red) + temp_colour.green + temp_colour.blue
+		    gc = temp_colour.red + (255 - temp_colour.green) + temp_colour.blue
+		    bc = temp_colour.red + temp_colour.green + (255 - temp_colour.blue)
+		    mp_temp = min(cc,mc,yc,rc,gc,bc)
 		    if mp_temp < mp then
 		      mp = mp_temp
 		      return_colour = temp_colour

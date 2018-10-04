@@ -47,15 +47,7 @@ Protected Class ga_picture
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
-		        b = Main_Window.brightest_neighbour(me,i,j)
-		        bb = b.Red + b.Green + b.Blue
-		        d = Main_Window.darkest_neighbour(me,i,j)
-		        dd = d.Red + d.Green + d.blue
-		        if (255-bb < dd) xor dorb then
-		          temp_pic.picture(i,j) = b
-		        else
-		          temp_pic.picture(i,j) = d
-		        end
+		        temp_pic.picture(i,j) = Main_Window.mp_neighbour(me,i,j)
 		      next
 		    next
 		    for i = 0 to 63
@@ -64,6 +56,26 @@ Protected Class ga_picture
 		      next
 		    next
 		  next
+		  'for k = 1 to evolve_iterations
+		  'for i = 0 to 63
+		  'for j = 0 to 63
+		  'b = Main_Window.brightest_neighbour(me,i,j)
+		  'bb = b.Red + b.Green + b.Blue
+		  'd = Main_Window.darkest_neighbour(me,i,j)
+		  'dd = d.Red + d.Green + d.blue
+		  'if (255-bb < dd) xor dorb then
+		  'temp_pic.picture(i,j) = b
+		  'else
+		  'temp_pic.picture(i,j) = d
+		  'end
+		  'next
+		  'next
+		  'for i = 0 to 63
+		  'for j = 0 to 63
+		  'picture(i,j) = temp_pic.picture(i,j)
+		  'next
+		  'next
+		  'next
 		  
 		End Sub
 	#tag EndMethod
@@ -204,6 +216,11 @@ Protected Class ga_picture
 			Name="mutate_ratio"
 			Group="Behavior"
 			Type="double"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="dorb"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

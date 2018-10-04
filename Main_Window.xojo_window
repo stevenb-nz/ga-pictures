@@ -277,6 +277,14 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function merge_colours(c1 as Color, c2 as Color) As Color
+		  return  rgb(ceil((c1.red + c2.red) / 2), ceil((c1.green + c2.green) / 2), ceil((c1.blue + c2.blue) / 2))
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
 		  dim mp, mp_temp as integer
 		  dim temp_colour, return_colour as color

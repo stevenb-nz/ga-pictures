@@ -27,7 +27,7 @@ Protected Class ga_picture
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
-		        temp_pic.picture(i,j) = Main_Window.mp_neighbour(me,i,j)
+		        temp_pic.picture(i,j) = Main_Window.merge_colours(Main_Window.mp_neighbour(me,i,j),picture(i,j))
 		      next
 		    next
 		    for i = 0 to 63
@@ -172,11 +172,6 @@ Protected Class ga_picture
 			Name="mutate_ratio"
 			Group="Behavior"
 			Type="double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="dorb"
-			Group="Behavior"
-			Type="Boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

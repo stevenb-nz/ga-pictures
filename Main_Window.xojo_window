@@ -422,64 +422,72 @@ End
 	#tag Method, Flags = &h0
 		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
 		  dim mp, mp_temp as integer
-		  dim return_colour as color
+		  dim temp_colour, return_colour as color
 		  
 		  mp = 128
 		  
 		  if x-1 > -1 and y -1 > -1 then
-		    how_bright = pic.picture(x-1,y-1).red + pic.picture(x-1,y-1).green + pic.picture(x-1,y-1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x-1,y-1)
+		    temp_colour = pic.picture(x-1,y-1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if x-1 > -1 then
-		    how_bright = pic.picture(x-1,y).red + pic.picture(x-1,y).green + pic.picture(x-1,y).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x-1,y)
+		    temp_colour = pic.picture(x-1,y)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if x-1 > -1 and y +1 < 64 then
-		    how_bright = pic.picture(x-1,y+1).red + pic.picture(x-1,y+1).green + pic.picture(x-1,y+1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x-1,y+1)
+		    temp_colour = pic.picture(x-1,y+1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if y +1 < 64 then
-		    how_bright = pic.picture(x,y+1).red + pic.picture(x,y+1).green + pic.picture(x,y+1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x,y+1)
+		    temp_colour = pic.picture(x,y+1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if x+1 < 64 and y +1 < 64 then
-		    how_bright = pic.picture(x+1,y+1).red + pic.picture(x+1,y+1).green + pic.picture(x+1,y+1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x+1,y+1)
+		    temp_colour = pic.picture(x+1,y+1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if x+1 < 64 then
-		    how_bright = pic.picture(x+1,y).red + pic.picture(x+1,y).green + pic.picture(x+1,y).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x+1,y)
+		    temp_colour = pic.picture(x+1,y)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if x+1 < 64 and y -1 > -1 then
-		    how_bright = pic.picture(x+1,y-1).red + pic.picture(x+1,y-1).green + pic.picture(x+1,y-1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x+1,y-1)
+		    temp_colour = pic.picture(x+1,y-1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  if y -1 > -1 then
-		    how_bright = pic.picture(x,y-1).red + pic.picture(x,y-1).green + pic.picture(x,y-1).blue
-		    if brightest < how_bright then
-		      brightest = how_bright
-		      return_colour = pic.picture(x,y-1)
+		    temp_colour = pic.picture(x,y-1)
+		    mp_temp = min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		    if mp_temp < mp then
+		      mp = mp_temp
+		      return_colour = temp_colour
 		    end
 		  end
 		  

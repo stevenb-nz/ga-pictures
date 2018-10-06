@@ -81,7 +81,7 @@ End
 
 	#tag Event
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
-		  dim i,j,k as integer
+		  dim k as integer
 		  
 		  for k = 0 to 15
 		    g.DrawPicture(ga_pictures_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)

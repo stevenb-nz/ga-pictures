@@ -286,83 +286,100 @@ End
 
 	#tag Method, Flags = &h0
 		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
-		  dim mp, mp_temp as integer
+		  dim i, mp, mp_temp as integer
 		  dim temp_colour, return_colour as color
+		  dim direction, directions(-1) as integer
 		  
 		  mp = 256
-		  
-		  if x-1 > -1 and y -1 > -1 then
-		    temp_colour = pic.picture(x-1,y-1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if x-1 > -1 then
-		    temp_colour = pic.picture(x-1,y)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if x-1 > -1 and y +1 < 64 then
-		    temp_colour = pic.picture(x-1,y+1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if y +1 < 64 then
-		    temp_colour = pic.picture(x,y+1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if x+1 < 64 and y +1 < 64 then
-		    temp_colour = pic.picture(x+1,y+1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if x+1 < 64 then
-		    temp_colour = pic.picture(x+1,y)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if x+1 < 64 and y -1 > -1 then
-		    temp_colour = pic.picture(x+1,y-1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
-		  if y -1 > -1 then
-		    temp_colour = pic.picture(x,y-1)
-		    mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
-		    mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
-		    if mp_temp < mp then
-		      mp = mp_temp
-		      return_colour = temp_colour
-		    end
-		  end
+		  for i = 0 to 7
+		    directions.Append i
+		  next
+		  directions.Shuffle
+		  for i = 0 to 7
+		    direction = directions(i)
+		    select case direction
+		    case 0
+		      if x-1 > -1 and y -1 > -1 then
+		        temp_colour = pic.picture(x-1,y-1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 1
+		      if x-1 > -1 then
+		        temp_colour = pic.picture(x-1,y)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 2
+		      if x-1 > -1 and y +1 < 64 then
+		        temp_colour = pic.picture(x-1,y+1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 3
+		      if y +1 < 64 then
+		        temp_colour = pic.picture(x,y+1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 4
+		      if x+1 < 64 and y +1 < 64 then
+		        temp_colour = pic.picture(x+1,y+1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 5
+		      if x+1 < 64 then
+		        temp_colour = pic.picture(x+1,y)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 6
+		      if x+1 < 64 and y -1 > -1 then
+		        temp_colour = pic.picture(x+1,y-1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    case 7
+		      if y -1 > -1 then
+		        temp_colour = pic.picture(x,y-1)
+		        mp_temp = temp_colour.red + temp_colour.Green + temp_colour.Blue
+		        mp_temp = min(abs(255-mp_temp),abs(510-mp_temp)) + min(temp_colour.red,255-temp_colour.red) + min(temp_colour.green,255-temp_colour.green) + min(temp_colour.blue,255-temp_colour.blue)
+		        if mp_temp < mp then
+		          mp = mp_temp
+		          return_colour = temp_colour
+		        end
+		      end
+		    End Select
+		  next
 		  
 		  return return_colour
 		  

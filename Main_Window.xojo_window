@@ -115,7 +115,7 @@ End
 		  for i = 0 to 63
 		    for j = 0 to 63
 		      if p1.picture(i,j) = p2.picture(i,j) and rnd < return_pic.mutate_ratio then
-		        return_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
+		        return_pic.picture(i,j) = rgb(255 - p1.picture(i,j).red, 255 - p1.picture(i,j).green, 255 - p1.picture(i,j).blue)
 		      else
 		        if rnd < return_pic.dominant_ratio then
 		          return_pic.picture(i,j) = p1.picture(i,j)
@@ -132,68 +132,80 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function closest_neighbour(pic as ga_picture, x as integer, y as integer) As color
-		  dim diff,min_diff as integer
+		Function closest_neighbour(pic as ga_picture, directions() as integer, x as integer, y as integer) As color
+		  dim i, diff,min_diff as integer
 		  dim return_colour as color
 		  
 		  min_diff = 256
 		  
-		  if x-1 > -1 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x-1,y-1)
-		    end
-		  end
-		  if x-1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x-1,y)
-		    end
-		  end
-		  if x-1 > -1 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x-1,y+1)
-		    end
-		  end
-		  if y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x,y+1)
-		    end
-		  end
-		  if x+1 < 64 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x+1,y+1)
-		    end
-		  end
-		  if x+1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x+1,y)
-		    end
-		  end
-		  if x+1 < 64 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x+1,y-1)
-		    end
-		  end
-		  if y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
-		    if diff < min_diff then
-		      min_diff = diff
-		      return_colour = pic.picture(x,y-1)
-		    end
-		  end
+		  for i = 0 to 7
+		    select case directions(i)
+		    case 0
+		      if x-1 > -1 and y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x-1,y-1)
+		        end
+		      end
+		    case 1
+		      if x-1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x-1,y)
+		        end
+		      end
+		    case 2
+		      if x-1 > -1 and y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x-1,y+1)
+		        end
+		      end
+		    case 3
+		      if y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x,y+1)
+		        end
+		      end
+		    case 4
+		      if x+1 < 64 and y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x+1,y+1)
+		        end
+		      end
+		    case 5
+		      if x+1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x+1,y)
+		        end
+		      end
+		    case 6
+		      if x+1 < 64 and y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x+1,y-1)
+		        end
+		      end
+		    case 7
+		      if y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		        if diff < min_diff then
+		          min_diff = diff
+		          return_colour = pic.picture(x,y-1)
+		        end
+		      end    
+		    End Select
+		  next
 		  
 		  return return_colour
 		  
@@ -208,68 +220,80 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function furthest_neighbour(pic as ga_picture, x as integer, y as integer) As color
-		  dim diff,max_diff as integer
+		Function furthest_neighbour(pic as ga_picture, directions() as integer, x as integer, y as integer) As color
+		  dim i, diff,max_diff as integer
 		  dim return_colour as color
 		  
 		  max_diff = -1
 		  
-		  if x-1 > -1 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y-1)
-		    end
-		  end
-		  if x-1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y)
-		    end
-		  end
-		  if x-1 > -1 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x-1,y+1)
-		    end
-		  end
-		  if y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x,y+1)
-		    end
-		  end
-		  if x+1 < 64 and y +1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y+1)
-		    end
-		  end
-		  if x+1 < 64 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y)
-		    end
-		  end
-		  if x+1 < 64 and y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x+1,y-1)
-		    end
-		  end
-		  if y -1 > -1 then
-		    diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
-		    if diff > max_diff then
-		      max_diff = diff
-		      return_colour = pic.picture(x,y-1)
-		    end
-		  end
+		  for i = 0 to 7
+		    select case directions(i)
+		    case 0
+		      if x-1 > -1 and y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y-1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x-1,y-1)
+		        end
+		      end
+		    case 1
+		      if x-1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x-1,y)
+		        end
+		      end
+		    case 2
+		      if x-1 > -1 and y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x-1,y+1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x-1,y+1)
+		        end
+		      end
+		    case 3
+		      if y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x,y+1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x,y+1)
+		        end
+		      end
+		    case 4
+		      if x+1 < 64 and y +1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y+1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x+1,y+1)
+		        end
+		      end
+		    case 5
+		      if x+1 < 64 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x+1,y)
+		        end
+		      end
+		    case 6
+		      if x+1 < 64 and y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x+1,y-1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x+1,y-1)
+		        end
+		      end
+		    case 7
+		      if y -1 > -1 then
+		        diff = colour_diff(pic.picture(x,y),pic.picture(x,y-1))
+		        if diff > max_diff then
+		          max_diff = diff
+		          return_colour = pic.picture(x,y-1)
+		        end
+		      end    
+		    End Select
+		  next
 		  
 		  return return_colour
 		  
@@ -285,19 +309,13 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function mp_neighbour(pic as ga_picture, x as integer, y as integer) As color
+		Function mp_neighbour(pic as ga_picture, directions() as integer, x as integer, y as integer) As color
 		  dim i, mp, mp_temp as integer
 		  dim temp_colour, return_colour as color
-		  dim direction, directions(-1) as integer
 		  
 		  mp = 256
 		  for i = 0 to 7
-		    directions.Append i
-		  next
-		  directions.Shuffle
-		  for i = 0 to 7
-		    direction = directions(i)
-		    select case direction
+		    select case directions(i)
 		    case 0
 		      if x-1 > -1 and y -1 > -1 then
 		        temp_colour = pic.picture(x-1,y-1)

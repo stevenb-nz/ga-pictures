@@ -4,15 +4,21 @@ Protected Class ga_picture
 		Sub evolve()
 		  dim c,f as color
 		  dim i,j,k as integer
+		  dim directions(-1) as Integer
 		  dim temp_pic As new ga_picture
+		  
+		  for i = 0 to 7
+		    directions.Append i
+		  next
+		  directions.Shuffle
 		  
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
-		        c = Main_Window.closest_neighbour(me,i,j)
-		        f = Main_Window.furthest_neighbour(me,i,j)
+		        c = Main_Window.closest_neighbour(me,directions,i,j)
+		        f = Main_Window.furthest_neighbour(me,directions,i,j)
 		        if Main_Window.colour_diff(f,picture(i,j)) = 0 then
-		          temp_pic.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
+		          temp_pic.picture(i,j) = rgb(255 - f.Red, 255 - f.Green, 255 - f.Blue)
 		        else
 		          temp_pic.picture(i,j) = c
 		        end
@@ -27,7 +33,7 @@ Protected Class ga_picture
 		  for k = 1 to evolve_iterations
 		    for i = 0 to 63
 		      for j = 0 to 63
-		        temp_pic.picture(i,j) = Main_Window.merge_colours(Main_Window.mp_neighbour(me,i,j),picture(i,j))
+		        temp_pic.picture(i,j) = Main_Window.merge_colours(Main_Window.mp_neighbour(me,directions,i,j),picture(i,j))
 		      next
 		    next
 		    for i = 0 to 63

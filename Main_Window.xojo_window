@@ -75,8 +75,8 @@ End
 
 	#tag Event
 		Sub Open()
-		  mode = false
-		  if mode then
+		  drawing_mode = false
+		  if drawing_mode then
 		    reset_drawings
 		  else
 		    reset_pictures
@@ -88,17 +88,20 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  dim k as integer
 		  
-		  for k = 0 to 15
-		    g.DrawPicture(ga_pictures_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)
-		  next
-		  
+		  if drawing_mode then
+		    
+		  else
+		    for k = 0 to 15
+		      g.DrawPicture(ga_pictures_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)
+		    next
+		  end
 		End Sub
 	#tag EndEvent
 
 
 	#tag MenuHandler
 		Function FileReset() As Boolean Handles FileReset.Action
-			if mode then
+			if drawing_mode then
 			reset_drawings
 			else
 			reset_pictures
@@ -471,11 +474,15 @@ End
 
 
 	#tag Property, Flags = &h0
-		ga_pictures_array(-1) As ga_picture
+		drawing_mode As boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		mode As boolean
+		ga_drawings_array(-1) As ga_drawing
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ga_pictures_array(-1) As ga_picture
 	#tag EndProperty
 
 
@@ -705,5 +712,10 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="drawing_mode"
+		Group="Behavior"
+		Type="boolean"
 	#tag EndViewProperty
 #tag EndViewBehavior

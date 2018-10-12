@@ -1,7 +1,27 @@
 #tag Class
 Protected Class gene
+	#tag Method, Flags = &h0
+		Sub init()
+		  centre(0) = rnd*64
+		  centre(1) = rnd*64
+		  colour = RGB(rnd*255,rnd*255,rnd*255)
+		  span = rnd*64
+		  if rnd < 0.5 then
+		    square_or_circle = true
+		  else
+		    square_or_circle = false
+		  end
+		  
+		End Sub
+	#tag EndMethod
+
+
 	#tag Property, Flags = &h0
 		centre(1) As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		colour As Color
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -56,11 +76,6 @@ Protected Class gene
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="evolve_iterations"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="dominant_ratio"
 			Group="Behavior"
 			Type="double"
@@ -71,9 +86,14 @@ Protected Class gene
 			Type="double"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="chromosome"
+			Name="span"
 			Group="Behavior"
 			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="square_or_circle"
+			Group="Behavior"
+			Type="boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

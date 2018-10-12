@@ -75,7 +75,7 @@ End
 
 	#tag Event
 		Sub Open()
-		  drawing_mode = false
+		  drawing_mode = true
 		  if drawing_mode then
 		    reset_drawings
 		  else
@@ -88,13 +88,14 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  dim k as integer
 		  
-		  if drawing_mode then
-		    
-		  else
-		    for k = 0 to 15
+		  for k = 0 to 15
+		    if drawing_mode then
+		      g.DrawPicture(ga_drawings_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)
+		    else
 		      g.DrawPicture(ga_pictures_array(k).pic,74*(k mod 4)+20,74*(k \ 4)+20)
-		    next
-		  end
+		    end
+		  next
+		  
 		End Sub
 	#tag EndEvent
 
@@ -428,6 +429,8 @@ End
 		    new_ga_d = new ga_drawing
 		    new_c = new chromosome
 		    new_g = new gene
+		    
+		    new_g.init
 		    
 		    new_c.chromosome.Append new_g
 		    new_ga_d.genome.Append new_c

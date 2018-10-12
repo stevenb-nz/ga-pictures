@@ -1,5 +1,27 @@
 #tag Class
 Protected Class ga_drawing
+	#tag Method, Flags = &h0
+		Function pic() As Picture
+		  dim i,j as Integer
+		  dim p as new picture(64,64,32)
+		  
+		  for i = 0 to UBound(genome)
+		    for j = 0 to ubound(genome(i).chromosome)
+		      p.Graphics.ForeColor = genome(i).chromosome(j).colour
+		      if genome(i).chromosome(j).square_or_circle then
+		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).span,genome(i).chromosome(j).span)
+		      else
+		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).span,genome(i).chromosome(j).span)
+		      end
+		    next
+		  next
+		  
+		  return p
+		  
+		End Function
+	#tag EndMethod
+
+
 	#tag Property, Flags = &h0
 		dominant_ratio As double
 	#tag EndProperty
@@ -45,11 +67,6 @@ Protected Class ga_drawing
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="evolve_iterations"
-			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty

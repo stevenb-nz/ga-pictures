@@ -23,15 +23,7 @@ Protected Class ga_drawing
 
 
 	#tag Property, Flags = &h0
-		dominant_ratio As double
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		genome(-1) As chromosome
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		mutate_ratio As double
 	#tag EndProperty
 
 

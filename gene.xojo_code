@@ -25,14 +25,6 @@ Protected Class gene
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		dominant_ratio As double
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		mutate_ratio As double
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		span As Integer
 	#tag EndProperty
 
@@ -94,6 +86,12 @@ Protected Class gene
 			Name="square_or_circle"
 			Group="Behavior"
 			Type="boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="colour"
+			Group="Behavior"
+			InitialValue="&c000000"
+			Type="Color"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

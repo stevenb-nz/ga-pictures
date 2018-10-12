@@ -46,25 +46,29 @@ End
 		  ymod74= yminus20 mod 74
 		  if xmod74 > 0 and xmod74 < 65 and ymod74 > 0 and ymod74 < 65 then
 		    k = xdiv74 + ydiv74*4
-		    
-		    c.Picture = ga_pictures_array(k).pic
-		    
-		    keep = ga_pictures_array(k)
-		    ga_pictures_array.Remove(k)
-		    
-		    temp_ga_p_array.Append keep
-		    
-		    for i = 0 to UBound(ga_pictures_array)
-		      temp_ga_p_array.Append breed(keep,ga_pictures_array(i))
-		    next
-		    
-		    redim ga_pictures_array(-1)
-		    
-		    for i = 0 to UBound(temp_ga_p_array)
-		      temp_ga_p_array(i).evolve
-		      temp_ga_p_array(i).normalise
-		      ga_pictures_array.Append temp_ga_p_array(i)
-		    next
+		    if drawing_mode then
+		      c.Picture = ga_drawings_array(k).pic
+		      
+		    else
+		      c.Picture = ga_pictures_array(k).pic
+		      
+		      keep = ga_pictures_array(k)
+		      ga_pictures_array.Remove(k)
+		      
+		      temp_ga_p_array.Append keep
+		      
+		      for i = 0 to UBound(ga_pictures_array)
+		        temp_ga_p_array.Append breed(keep,ga_pictures_array(i))
+		      next
+		      
+		      redim ga_pictures_array(-1)
+		      
+		      for i = 0 to UBound(temp_ga_p_array)
+		        temp_ga_p_array(i).evolve
+		        temp_ga_p_array(i).normalise
+		        ga_pictures_array.Append temp_ga_p_array(i)
+		      next
+		    end
 		    
 		    refresh
 		    

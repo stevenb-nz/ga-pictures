@@ -4,14 +4,6 @@ Protected Class chromosome
 		chromosome(-1) As gene
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		dominant_ratio As double
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		mutate_ratio As double
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -48,11 +40,6 @@ Protected Class chromosome
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="evolve_iterations"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="dominant_ratio"
 			Group="Behavior"
 			Type="double"
@@ -61,11 +48,6 @@ Protected Class chromosome
 			Name="mutate_ratio"
 			Group="Behavior"
 			Type="double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="chromosome(-1)"
-			Group="Behavior"
-			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

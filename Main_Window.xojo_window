@@ -419,26 +419,19 @@ End
 	#tag Method, Flags = &h0
 		Sub reset_drawings()
 		  dim i,j,k as integer
-		  dim new_ga_p as ga_picture
+		  dim new_ga_d as ga_drawing
+		  dim new_c as chromosome
+		  dim new_g as gene
 		  redim ga_pictures_array(-1)
 		  
 		  for k = 0 to 15
-		    new_ga_p = new ga_picture
+		    new_ga_d = new ga_drawing
+		    new_c = new chromosome
+		    new_g = new gene
 		    
-		    for i = 0 to 63
-		      for j = 0 to 63
-		        new_ga_p.picture(i,j) = rgb(rnd*256,rnd*256,rnd*256)
-		      next
-		    next
-		    
-		    new_ga_p.evolve_iterations = ceil(rnd*4)
-		    new_ga_p.dominant_ratio = rnd/2 + 0.5
-		    new_ga_p.mutate_ratio = rnd
-		    
-		    new_ga_p.evolve
-		    new_ga_p.normalise
-		    
-		    ga_pictures_array.Append new_ga_p
+		    new_c.chromosome.Append new_g
+		    new_ga_d.genome.Append new_c
+		    ga_drawings_array.Append new_ga_d
 		  next
 		  
 		End Sub

@@ -76,6 +76,7 @@ End
 	#tag Event
 		Sub Open()
 		  drawing_mode = true
+		  
 		  if drawing_mode then
 		    reset_drawings
 		  else
@@ -423,17 +424,19 @@ End
 		  dim new_ga_d as ga_drawing
 		  dim new_c as chromosome
 		  dim new_g as gene
-		  redim ga_pictures_array(-1)
+		  redim ga_drawings_array(-1)
 		  
 		  for k = 0 to 15
 		    new_ga_d = new ga_drawing
-		    new_c = new chromosome
-		    new_g = new gene
-		    
-		    new_g.init
-		    
-		    new_c.chromosome.Append new_g
-		    new_ga_d.genome.Append new_c
+		    for i = 0 to 3
+		      new_c = new chromosome
+		      for j = 0 to 3
+		        new_g = new gene
+		        new_g.init
+		        new_c.chromosome.Append new_g
+		      next
+		      new_ga_d.genome.Append new_c
+		    next
 		    ga_drawings_array.Append new_ga_d
 		  next
 		  

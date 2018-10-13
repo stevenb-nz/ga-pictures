@@ -137,34 +137,46 @@ End
 
 	#tag Method, Flags = &h0
 		Function breed_d(d1 as ga_drawing, d2 as ga_drawing) As ga_drawing
-		  dim i,j as integer
+		  dim i as integer
 		  dim temp_g as gene
 		  dim temp_c as chromosome
 		  dim return_drawing As new ga_drawing
 		  
 		  for i = 0 to min(UBound(d1.genome),UBound(d2.genome))
-		    temp_c = new chromosome
-		    for j = 0 to min(ubound(d1.genome(i).chromosome),ubound(d2.genome(i).chromosome))
-		      temp_g = new gene
-		      if rnd < 0.5 then
-		        temp_g.centre(0) = d1.genome(i).chromosome(j).centre(0)
-		        temp_g.centre(1) = d1.genome(i).chromosome(j).centre(1)
-		        temp_g.colour = d1.genome(i).chromosome(j).colour
-		        temp_g.span = d1.genome(i).chromosome(j).span
-		        temp_g.square_or_circle = d1.genome(i).chromosome(j).square_or_circle
-		      else
-		        temp_g.centre(0) = (d1.genome(i).chromosome(j).centre(0)+d2.genome(i).chromosome(j).centre(0))\2
-		        temp_g.centre(1) = (d1.genome(i).chromosome(j).centre(1)+d2.genome(i).chromosome(j).centre(1))\2
-		        temp_g.colour = RGB((d1.genome(i).chromosome(j).colour.red+d2.genome(i).chromosome(j).colour.red)\2,(d1.genome(i).chromosome(j).colour.green+d2.genome(i).chromosome(j).colour.green)\2,(d1.genome(i).chromosome(j).colour.blue+d2.genome(i).chromosome(j).colour.blue)\2)
-		        temp_g.span = (d1.genome(i).chromosome(j).span+d2.genome(i).chromosome(j).span)\2
-		        temp_g.square_or_circle = not d2.genome(i).chromosome(j).square_or_circle
-		      end
-		      temp_c.chromosome.Append temp_g
-		    next
-		    return_drawing.genome.Append temp_c
+		    return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i))
 		  next
 		  
 		  return return_drawing
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function breed_dc(c1 as chromosome, c2 as chromosome) As chromosome
+		  dim i as integer
+		  dim temp_g as gene
+		  dim temp_c as chromosome
+		  dim return_chromosome As new chromosome
+		  
+		  for i = 0 to min(ubound(c1.chromosome),ubound(c2.chromosome))
+		    temp_g = new gene
+		    if rnd < 0.5 then
+		      temp_g.centre(0) = c1.chromosome(i).centre(0)
+		      temp_g.centre(1) = c1.chromosome(i).centre(1)
+		      temp_g.colour = c1.chromosome(i).colour
+		      temp_g.span = c1.chromosome(i).span
+		      temp_g.square_or_circle = c1.chromosome(i).square_or_circle
+		    else
+		      temp_g.centre(0) = (c1.chromosome(i).centre(0)+c2.chromosome(i).centre(0))\2
+		      temp_g.centre(1) = (c1.chromosome(i).centre(1)+c2.chromosome(i).centre(1))\2
+		      temp_g.colour = RGB((c1.chromosome(i).colour.red+c2.chromosome(i).colour.red)\2,(c1.chromosome(i).colour.green+c2.chromosome(i).colour.green)\2,(c1.chromosome(i).colour.blue+c2.chromosome(i).colour.blue)\2)
+		      temp_g.span = (c1.chromosome(i).span+c2.chromosome(i).span)\2
+		      temp_g.square_or_circle = not c2.chromosome(i).square_or_circle
+		    end
+		    return_chromosome.chromosome.Append temp_g
+		  next
+		  
+		  return return_chromosome
 		  
 		End Function
 	#tag EndMethod

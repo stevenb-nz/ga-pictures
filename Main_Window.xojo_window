@@ -34,7 +34,9 @@ End
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  dim i,k as integer
 		  dim xminus20, yminus20, xdiv74, ydiv74, xmod74, ymod74 as integer
-		  dim keep as ga_picture
+		  dim keep_d as ga_drawing
+		  dim keep_p as ga_picture
+		  dim temp_ga_d_array(-1) as ga_drawing
 		  dim temp_ga_p_array(-1) as ga_picture
 		  dim c as new Clipboard
 		  
@@ -49,16 +51,30 @@ End
 		    if drawing_mode then
 		      c.Picture = ga_drawings_array(k).pic
 		      
+		      keep_d = ga_drawings_array(k)
+		      ga_drawings_array.Remove(k)
+		      
+		      temp_ga_d_array.Append keep_d
+		      
+		      for i = 0 to UBound(ga_drawings_array)
+		        temp_ga_d_array.Append breed_d(keep_d,ga_drawings_array(i))
+		      next
+		      
+		      redim ga_drawings_array(-1)
+		      
+		      for i = 0 to UBound(temp_ga_d_array)
+		        ga_drawings_array.Append temp_ga_d_array(i)
+		      next
 		    else
 		      c.Picture = ga_pictures_array(k).pic
 		      
-		      keep = ga_pictures_array(k)
+		      keep_p = ga_pictures_array(k)
 		      ga_pictures_array.Remove(k)
 		      
-		      temp_ga_p_array.Append keep
+		      temp_ga_p_array.Append keep_p
 		      
 		      for i = 0 to UBound(ga_pictures_array)
-		        temp_ga_p_array.Append breed(keep,ga_pictures_array(i))
+		        temp_ga_p_array.Append breed_p(keep_p,ga_pictures_array(i))
 		      next
 		      
 		      redim ga_pictures_array(-1)
@@ -120,7 +136,41 @@ End
 
 
 	#tag Method, Flags = &h0
-		Function breed(p1 as ga_picture, p2 as ga_picture) As ga_picture
+		Function breed_d(d1 as ga_drawing, d2 as ga_drawing) As ga_drawing
+		  dim i,j as integer
+		  dim temp_g as gene
+		  dim temp_c as chromosome
+		  dim return_drawing As new ga_drawing
+		  
+		  for i = 0 to min(UBound(d1.genome),UBound(d2.genome))
+		    temp_c = new chromosome
+		    for j = 0 to min(ubound(d1.genome(i).chromosome),ubound(d2.genome(i).chromosome))
+		      temp_g = new gene
+		      if rnd < 0.5 then
+		        temp_g.centre(0) = d1.genome(i).chromosome(j).centre(0)
+		        temp_g.centre(1) = d1.genome(i).chromosome(j).centre(1)
+		        temp_g.colour = d1.genome(i).chromosome(j).colour
+		        temp_g.span = d1.genome(i).chromosome(j).span
+		        temp_g.square_or_circle = d1.genome(i).chromosome(j).square_or_circle
+		      else
+		        temp_g.centre(0) = (d1.genome(i).chromosome(j).centre(0)+d2.genome(i).chromosome(j).centre(0))\2
+		        temp_g.centre(1) = (d1.genome(i).chromosome(j).centre(1)+d2.genome(i).chromosome(j).centre(1))\2
+		        temp_g.colour = RGB((d1.genome(i).chromosome(j).colour.red+d2.genome(i).chromosome(j).colour.red)\2,(d1.genome(i).chromosome(j).colour.green+d2.genome(i).chromosome(j).colour.green)\2,(d1.genome(i).chromosome(j).colour.blue+d2.genome(i).chromosome(j).colour.blue)\2)
+		        temp_g.span = (d1.genome(i).chromosome(j).span+d2.genome(i).chromosome(j).span)\2
+		        temp_g.square_or_circle = not d2.genome(i).chromosome(j).square_or_circle
+		      end
+		      temp_c.chromosome.Append temp_g
+		    next
+		    return_drawing.genome.Append temp_c
+		  next
+		  
+		  return return_drawing
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function breed_p(p1 as ga_picture, p2 as ga_picture) As ga_picture
 		  dim i,j as integer
 		  dim dr as double
 		  dim return_pic As new ga_picture

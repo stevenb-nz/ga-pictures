@@ -1,6 +1,12 @@
 #tag Class
 Protected Class ga_drawing
 	#tag Method, Flags = &h0
+		Sub evolve()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function pic() As Picture
 		  dim i,j as Integer
 		  dim p as new picture(64,64,32)
@@ -60,16 +66,6 @@ Protected Class ga_drawing
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="dominant_ratio"
-			Group="Behavior"
-			Type="double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="mutate_ratio"
-			Group="Behavior"
-			Type="double"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

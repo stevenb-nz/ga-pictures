@@ -138,8 +138,6 @@ End
 	#tag Method, Flags = &h0
 		Function breed_d(d1 as ga_drawing, d2 as ga_drawing) As ga_drawing
 		  dim i,l1,l2 as integer
-		  dim temp_g as gene
-		  dim temp_c as chromosome
 		  dim return_drawing As new ga_drawing
 		  
 		  l1 = UBound(d1.genome)+1
@@ -174,28 +172,36 @@ End
 		Function breed_dc(c1 as chromosome, c2 as chromosome) As chromosome
 		  dim i as integer
 		  dim temp_g as gene
-		  dim temp_c as chromosome
 		  dim return_chromosome As new chromosome
 		  
 		  for i = 0 to min(ubound(c1.chromosome),ubound(c2.chromosome))
-		    temp_g = new gene
-		    if rnd < 0.5 then
-		      temp_g.centre(0) = c1.chromosome(i).centre(0)
-		      temp_g.centre(1) = c1.chromosome(i).centre(1)
-		      temp_g.colour = c1.chromosome(i).colour
-		      temp_g.span = c1.chromosome(i).span
-		      temp_g.square_or_circle = c1.chromosome(i).square_or_circle
-		    else
-		      temp_g.centre(0) = (c1.chromosome(i).centre(0)+c2.chromosome(i).centre(0))\2
-		      temp_g.centre(1) = (c1.chromosome(i).centre(1)+c2.chromosome(i).centre(1))\2
-		      temp_g.colour = RGB((c1.chromosome(i).colour.red+c2.chromosome(i).colour.red)\2,(c1.chromosome(i).colour.green+c2.chromosome(i).colour.green)\2,(c1.chromosome(i).colour.blue+c2.chromosome(i).colour.blue)\2)
-		      temp_g.span = (c1.chromosome(i).span+c2.chromosome(i).span)\2
-		      temp_g.square_or_circle = not c2.chromosome(i).square_or_circle
-		    end
-		    return_chromosome.chromosome.Append temp_g
+		    return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i))
 		  next
 		  
 		  return return_chromosome
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function breed_dg(g1 as gene, g2 as gene) As gene
+		  dim return_gene As new gene
+		  
+		  if rnd < 0.5 then
+		    return_gene.centre(0) = g1.centre(0)
+		    return_gene.centre(1) = g1.centre(1)
+		    return_gene.colour = g1.colour
+		    return_gene.span = g1.span
+		    return_gene.square_or_circle = g1.square_or_circle
+		  else
+		    return_gene.centre(0) = (g1.centre(0)+g2.centre(0))\2
+		    return_gene.centre(1) = (g1.centre(1)+g2.centre(1))\2
+		    return_gene.colour = RGB((g1.colour.red+g2.colour.red)\2,(g1.colour.green+g2.colour.green)\2,(g1.colour.blue+g2.colour.blue)\2)
+		    return_gene.span = (g1.span+g2.span)\2
+		    return_gene.square_or_circle = not g2.square_or_circle
+		  end
+		  
+		  return return_gene
 		  
 		End Function
 	#tag EndMethod

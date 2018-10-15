@@ -537,9 +537,9 @@ End
 		  
 		  for k = 0 to 15
 		    new_ga_d = new ga_drawing
-		    for i = 0 to 3
+		    for i = 0 to rnd*3+3
 		      new_c = new chromosome
-		      for j = 0 to 3
+		      for j = 0 to rnd*3+3
 		        new_g = new gene
 		        new_g.init
 		        new_c.chromosome.Append new_g

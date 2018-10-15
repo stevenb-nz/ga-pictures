@@ -170,13 +170,31 @@ End
 
 	#tag Method, Flags = &h0
 		Function breed_dc(c1 as chromosome, c2 as chromosome) As chromosome
-		  dim i as integer
-		  dim temp_g as gene
+		  dim i,l1,l2 as integer
 		  dim return_chromosome As new chromosome
 		  
-		  for i = 0 to min(ubound(c1.chromosome),ubound(c2.chromosome))
-		    return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i))
-		  next
+		  l1 = UBound(c1.chromosome)+1
+		  l2 = UBound(c2.chromosome)+1
+		  
+		  if l1 < l2 then
+		    for i = 0 to (l2 mod l1) * ((l2 \ l1)+1)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i\((l2 \ l1)+1)),c2.chromosome(i))
+		    next
+		    for i = (l2 mod l1) * ((l2 \ l1)+1) + 1 to ubound(c2.chromosome)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i-(l2-l1)),c2.chromosome(i))
+		    next
+		  elseif l1 > l2 then
+		    for i = 0 to (l1 mod l2) * ((l1 \ l2)+1)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i\((l1 \ l2)+1)))
+		    next
+		    for i = (l1 mod l2) * ((l1 \ l2)+1) + 1 to ubound(c1.chromosome)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i-(l1-l2)))
+		    next
+		  else
+		    for i = 0 to ubound(c1.chromosome)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i))
+		    next
+		  end
 		  
 		  return return_chromosome
 		  

@@ -137,14 +137,33 @@ End
 
 	#tag Method, Flags = &h0
 		Function breed_d(d1 as ga_drawing, d2 as ga_drawing) As ga_drawing
-		  dim i as integer
+		  dim i,l1,l2 as integer
 		  dim temp_g as gene
 		  dim temp_c as chromosome
 		  dim return_drawing As new ga_drawing
 		  
-		  for i = 0 to min(UBound(d1.genome),UBound(d2.genome))
-		    return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i))
-		  next
+		  l1 = UBound(d1.genome)+1
+		  l2 = UBound(d2.genome)+1
+		  
+		  if l1 < l2 then
+		    for i = 0 to (l2 mod l1) * ((l2 \ l1)+1)
+		      return_drawing.genome.Append breed_dc(d1.genome(i\((l2 \ l1)+1)),d2.genome(i))
+		    next
+		    for i = (l2 mod l1) * ((l2 \ l1)+1) + 1 to UBound(d2.genome)
+		      return_drawing.genome.Append breed_dc(d1.genome(i-(l2-l1)),d2.genome(i))
+		    next
+		  ElseIf l1 > l2 then
+		    for i = 0 to (l1 mod l2) * ((l1 \ l2)+1)
+		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i\((l1 \ l2)+1)))
+		    next
+		    for i = (l1 mod l2) * ((l1 \ l2)+1) + 1 to UBound(d1.genome)
+		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i-(l1-l2)))
+		    next
+		  else
+		    for i = 0 to UBound(d1.genome)
+		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i))
+		    next
+		  end
 		  
 		  return return_drawing
 		  

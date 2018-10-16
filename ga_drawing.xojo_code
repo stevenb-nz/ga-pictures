@@ -2,6 +2,21 @@
 Protected Class ga_drawing
 	#tag Method, Flags = &h0
 		Sub evolve()
+		  dim i as integer
+		  
+		  if rnd < 0.1 then
+		    i = rnd*(UBound(genome)+1)
+		    genome.Insert(i,genome(i).clone)
+		  end
+		  
+		  if rnd < 0.15 then
+		    i = rnd*(UBound(genome)+1)
+		    genome.Remove(i)
+		  end
+		  
+		  for i = 0 to UBound(genome)
+		    genome(i).evolve
+		  next
 		  
 		End Sub
 	#tag EndMethod

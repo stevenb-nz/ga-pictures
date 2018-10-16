@@ -14,6 +14,27 @@ Protected Class chromosome
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub evolve()
+		  dim i as integer
+		  
+		  if rnd < 0.1 then
+		    i = rnd*(UBound(chromosome)+1)
+		    chromosome.Insert(i,chromosome(i).clone)
+		  end
+		  
+		  if rnd < 0.15 then
+		    i = rnd*(UBound(chromosome)+1)
+		    chromosome.Remove(i)
+		  end
+		  
+		  for i = 0 to UBound(chromosome)
+		    'chromosome(i).evolve
+		  next
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		chromosome(-1) As gene

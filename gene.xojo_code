@@ -1,6 +1,21 @@
 #tag Class
 Protected Class gene
 	#tag Method, Flags = &h0
+		Function clone() As gene
+		  dim g As new gene
+		  
+		  g.centre(0) = centre(0)
+		  g.centre(1) = centre(1)
+		  g.colour = colour
+		  g.span = span
+		  g.square_or_circle = square_or_circle
+		  
+		  return g
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub init()
 		  centre(0) = rnd*64
 		  centre(1) = rnd*64
@@ -66,16 +81,6 @@ Protected Class gene
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="dominant_ratio"
-			Group="Behavior"
-			Type="double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="mutate_ratio"
-			Group="Behavior"
-			Type="double"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="span"

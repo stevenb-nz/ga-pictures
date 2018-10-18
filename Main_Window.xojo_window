@@ -58,12 +58,12 @@ End
 		      
 		      for i = 0 to UBound(ga_drawings_array)
 		        temp_ga_d_array.Append breed_d(keep_d,ga_drawings_array(i))
+		        temp_ga_d_array(UBound(temp_ga_d_array)).evolve
 		      next
 		      
 		      redim ga_drawings_array(-1)
 		      
 		      for i = 0 to UBound(temp_ga_d_array)
-		        temp_ga_d_array(i).evolve
 		        ga_drawings_array.Append temp_ga_d_array(i)
 		      next
 		    else

@@ -29,7 +29,7 @@ Protected Class chromosome
 		  end
 		  
 		  for i = 0 to UBound(chromosome)
-		    'chromosome(i).evolve
+		    chromosome(i).evolve
 		  next
 		  
 		End Sub

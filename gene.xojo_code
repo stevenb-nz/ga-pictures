@@ -16,6 +16,36 @@ Protected Class gene
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub evolve()
+		  dim mutate_factor as double
+		  
+		  mutate_factor = 0.05
+		  
+		  if rnd < mutate_factor then
+		    centre(0) = centre(0)+rnd*32-16
+		  end
+		  if rnd < mutate_factor then
+		    centre(1) = centre(1)+rnd*32-16
+		  end
+		  if rnd < mutate_factor then
+		    colour = rgb(rnd*255,colour.Green,colour.blue)
+		  end
+		  if rnd < mutate_factor then
+		    colour = rgb(colour.red,rnd*255,colour.blue)
+		  end
+		  if rnd < mutate_factor then
+		    colour = rgb(colour.red,colour.Green,rnd*255)
+		  end
+		  if rnd < mutate_factor then
+		    span = span * (rnd+0.5)
+		  end
+		  if rnd < mutate_factor then
+		    square_or_circle = not square_or_circle
+		  end
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub init()
 		  centre(0) = rnd*64
 		  centre(1) = rnd*64

@@ -60,6 +60,27 @@ Protected Class gene
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub normalise()
+		  if span > 127 then
+		    span = 127
+		  end
+		  if centre(0) - span / 2 > 63 then
+		    centre(0) = span/2 + 63
+		  end
+		  if centre(0) + span / 2 < 0 then
+		    centre(0) = 0 - span/2
+		  end
+		  if centre(1) - span / 2 > 63 then
+		    centre(1) = span/2 + 63
+		  end
+		  if centre(1) + span / 2 < 0 then
+		    centre(1) = 0 - span/2
+		  end
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		centre(1) As Integer

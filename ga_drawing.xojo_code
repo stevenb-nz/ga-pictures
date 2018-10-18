@@ -1,6 +1,15 @@
 #tag Class
 Protected Class ga_drawing
 	#tag Method, Flags = &h0
+		Function chromosomeCompare(c1 as chromosome, c2 as chromosome) As integer
+		  If c1.chromosome(0).span < c2.chromosome(0).span Then Return 1
+		  If c1.chromosome(0).span > c2.chromosome(0).span Then Return -1
+		  Return 0
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub evolve()
 		  dim i as integer
 		  
@@ -28,6 +37,7 @@ Protected Class ga_drawing
 		  for i = 0 to UBound(genome)
 		    genome(i).normalise
 		  next
+		  
 		End Sub
 	#tag EndMethod
 
@@ -50,6 +60,19 @@ Protected Class ga_drawing
 		  return p
 		  
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub sort_genes()
+		  dim i as Integer
+		  
+		  for i = 0 to UBound(genome)
+		    genome(i).sort_genes
+		  next
+		  
+		  genome.Sort(AddressOf chromosomeCompare)
+		  
+		End Sub
 	#tag EndMethod
 
 

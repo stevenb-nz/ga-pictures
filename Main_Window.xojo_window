@@ -555,7 +555,7 @@ End
 		      next
 		      new_ga_d.genome.Append new_c
 		    next
-		    new_ga_d.normalise
+		    new_ga_d.sort_genes
 		    ga_drawings_array.Append new_ga_d
 		  next
 		  

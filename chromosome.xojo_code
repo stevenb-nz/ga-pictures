@@ -36,7 +36,28 @@ Protected Class chromosome
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function geneCompare(g1 As gene, g2 As gene) As Integer
+		  If g1.span < g2.span Then Return 1
+		  If g1.span > g2.span Then Return -1
+		  Return 0
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub normalise()
+		  dim i as Integer
+		  
+		  for i = 0 to UBound(chromosome)
+		    chromosome(i).normalise
+		  next
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub sort_genes()
+		  chromosome.Sort(AddressOf geneCompare)
 		  
 		End Sub
 	#tag EndMethod

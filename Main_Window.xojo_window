@@ -59,6 +59,7 @@ End
 		      for i = 0 to UBound(ga_drawings_array)
 		        temp_ga_d_array.Append breed_d(keep_d,ga_drawings_array(i))
 		        temp_ga_d_array(UBound(temp_ga_d_array)).evolve
+		        temp_ga_d_array(UBound(temp_ga_d_array)).normalise
 		      next
 		      
 		      redim ga_drawings_array(-1)
@@ -554,6 +555,7 @@ End
 		      next
 		      new_ga_d.genome.Append new_c
 		    next
+		    new_ga_d.normalise
 		    ga_drawings_array.Append new_ga_d
 		  next
 		  

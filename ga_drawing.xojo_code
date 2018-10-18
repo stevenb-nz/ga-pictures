@@ -22,6 +22,16 @@ Protected Class ga_drawing
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub normalise()
+		  dim i as Integer
+		  
+		  for i = 0 to UBound(genome)
+		    genome(i).normalise
+		  next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function pic() As Picture
 		  dim i,j as Integer
 		  dim p as new picture(64,64,32)

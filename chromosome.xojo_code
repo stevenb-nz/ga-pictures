@@ -35,6 +35,12 @@ Protected Class chromosome
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub normalise()
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		chromosome(-1) As gene

@@ -145,18 +145,18 @@ End
 		  l2 = UBound(d2.genome)+1
 		  
 		  if l1 < l2 then
-		    for i = 0 to (l2 mod l1) * ((l2 \ l1)+1)
+		    for i = 0 to (l2 mod l1) * (l2 \ l1+1) - 1
 		      return_drawing.genome.Append breed_dc(d1.genome(i\((l2 \ l1)+1)),d2.genome(i))
 		    next
-		    for i = (l2 mod l1) * ((l2 \ l1)+1) + 1 to UBound(d2.genome)
-		      return_drawing.genome.Append breed_dc(d1.genome(i-(l2-l1)),d2.genome(i))
+		    for i = (l2 mod l1) * (l2 \ l1+1) to UBound(d2.genome)
+		      return_drawing.genome.Append breed_dc(d1.genome((i-l2 mod l1)\(l2 \ l1)),d2.genome(i))
 		    next
 		  ElseIf l1 > l2 then
-		    for i = 0 to (l1 mod l2) * ((l1 \ l2)+1)
+		    for i = 0 to (l1 mod l2) * (l1 \ l2+1) - 1
 		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i\((l1 \ l2)+1)))
 		    next
-		    for i = (l1 mod l2) * ((l1 \ l2)+1) + 1 to UBound(d1.genome)
-		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i-(l1-l2)))
+		    for i = (l1 mod l2) * (l1 \ l2+1) to UBound(d1.genome)
+		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome((i-l1 mod l2)\(l1 \ l2)))
 		    next
 		  else
 		    for i = 0 to UBound(d1.genome)
@@ -178,18 +178,18 @@ End
 		  l2 = UBound(c2.chromosome)+1
 		  
 		  if l1 < l2 then
-		    for i = 0 to (l2 mod l1) * ((l2 \ l1)+1)
+		    for i = 0 to (l2 mod l1) * (l2 \ l1+1) - 1
 		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i\((l2 \ l1)+1)),c2.chromosome(i))
 		    next
-		    for i = (l2 mod l1) * ((l2 \ l1)+1) + 1 to ubound(c2.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i-(l2-l1)),c2.chromosome(i))
+		    for i = (l2 mod l1) * (l2 \ l1+1) to ubound(c2.chromosome)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome((i-l2 mod l1)\(l2 \ l1)),c2.chromosome(i))
 		    next
 		  elseif l1 > l2 then
-		    for i = 0 to (l1 mod l2) * ((l1 \ l2)+1)
+		    for i = 0 to (l1 mod l2) * (l1 \ l2+1) - 1
 		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i\((l1 \ l2)+1)))
 		    next
-		    for i = (l1 mod l2) * ((l1 \ l2)+1) + 1 to ubound(c1.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i-(l1-l2)))
+		    for i = (l1 mod l2) * (l1 \ l2+1) to ubound(c1.chromosome)
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome((i-l1 mod l2)\(l1 \ l2)))
 		    next
 		  else
 		    for i = 0 to ubound(c1.chromosome)
@@ -206,19 +206,26 @@ End
 		Function breed_dg(g1 as gene, g2 as gene) As gene
 		  dim return_gene As new gene
 		  
-		  if rnd < 0.5 then
-		    return_gene.centre(0) = g1.centre(0)
-		    return_gene.centre(1) = g1.centre(1)
-		    return_gene.colour = g1.colour
-		    return_gene.span = g1.span
-		    return_gene.square_or_circle = g1.square_or_circle
-		  else
+		  Select case rnd*4
+		  case 0
+		    return_gene.centre(0) = g2.centre(0)
+		    return_gene.centre(1) = g2.centre(1)
+		    return_gene.colour = g2.colour
+		    return_gene.span = g2.span
+		    return_gene.square_or_circle = g2.square_or_circle
+		  case 1
 		    return_gene.centre(0) = (g1.centre(0)+g2.centre(0))\2
 		    return_gene.centre(1) = (g1.centre(1)+g2.centre(1))\2
 		    return_gene.colour = RGB((g1.colour.red+g2.colour.red)\2,(g1.colour.green+g2.colour.green)\2,(g1.colour.blue+g2.colour.blue)\2)
 		    return_gene.span = (g1.span+g2.span)\2
 		    return_gene.square_or_circle = not g2.square_or_circle
-		  end
+		  else
+		    return_gene.centre(0) = g1.centre(0)
+		    return_gene.centre(1) = g1.centre(1)
+		    return_gene.colour = g1.colour
+		    return_gene.span = g1.span
+		    return_gene.square_or_circle = g1.square_or_circle
+		  end select
 		  
 		  return return_gene
 		  

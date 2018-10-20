@@ -47,8 +47,8 @@ Protected Class gene
 
 	#tag Method, Flags = &h0
 		Sub init()
-		  centre(0) = rnd*2+31
-		  centre(1) = rnd*2+31
+		  centre(0) = rnd*32+16
+		  centre(1) = rnd*32+16
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
 		  span = rnd*64
 		  if rnd < 0.5 then

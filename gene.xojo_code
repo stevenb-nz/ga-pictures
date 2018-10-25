@@ -7,7 +7,8 @@ Protected Class gene
 		  g.centre(0) = centre(0)
 		  g.centre(1) = centre(1)
 		  g.colour = colour
-		  g.span = span
+		  g.width = width
+		  g.height = height
 		  g.square_or_circle = square_or_circle
 		  
 		  return g
@@ -37,7 +38,10 @@ Protected Class gene
 		    colour = rgb(colour.red,colour.Green,rnd*255)
 		  end
 		  if rnd < mutate_factor then
-		    span = span * (rnd+0.5)
+		    width = width * (rnd+0.5)
+		  end
+		  if rnd < mutate_factor then
+		    height = height * (rnd+0.5)
 		  end
 		  if rnd < mutate_factor then
 		    square_or_circle = not square_or_circle
@@ -50,7 +54,8 @@ Protected Class gene
 		  centre(0) = rnd*32+16
 		  centre(1) = rnd*32+16
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
-		  span = rnd*64
+		  width = rnd*64
+		  height = rnd*64
 		  if rnd < 0.5 then
 		    square_or_circle = true
 		  else
@@ -62,20 +67,23 @@ Protected Class gene
 
 	#tag Method, Flags = &h0
 		Sub normalise()
-		  if span > 127 then
-		    span = 127
+		  if width > 127 then
+		    width = 127
 		  end
-		  if centre(0) - span / 2 > 63 then
-		    centre(0) = span/2 + 63
+		  if height > 127 then
+		    height = 127
 		  end
-		  if centre(0) + span / 2 < 0 then
-		    centre(0) = 0 - span/2
+		  if centre(0) - width / 2 > 63 then
+		    centre(0) = width/2 + 63
 		  end
-		  if centre(1) - span / 2 > 63 then
-		    centre(1) = span/2 + 63
+		  if centre(0) + width / 2 < 0 then
+		    centre(0) = 0 - width/2
 		  end
-		  if centre(1) + span / 2 < 0 then
-		    centre(1) = 0 - span/2
+		  if centre(1) - height / 2 > 63 then
+		    centre(1) = height/2 + 63
+		  end
+		  if centre(1) + height / 2 < 0 then
+		    centre(1) = 0 - height/2
 		  end
 		  
 		End Sub
@@ -91,11 +99,15 @@ Protected Class gene
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		span As Integer
+		height As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		square_or_circle As boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		width As Integer
 	#tag EndProperty
 
 
@@ -134,7 +146,7 @@ Protected Class gene
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="span"
+			Name="height"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

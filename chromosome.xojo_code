@@ -37,8 +37,8 @@ Protected Class chromosome
 
 	#tag Method, Flags = &h0
 		Function geneCompare(g1 As gene, g2 As gene) As Integer
-		  If g1.span < g2.span Then Return 1
-		  If g1.span > g2.span Then Return -1
+		  If g1.width*g1.height < g2.width*g2.height Then Return 1
+		  If g1.width*g1.height > g2.width*g2.height Then Return -1
 		  Return 0
 		  
 		End Function

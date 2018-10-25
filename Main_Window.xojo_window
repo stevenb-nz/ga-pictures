@@ -212,19 +212,22 @@ End
 		    return_gene.centre(0) = g2.centre(0)
 		    return_gene.centre(1) = g2.centre(1)
 		    return_gene.colour = g2.colour
-		    return_gene.span = g2.span
+		    return_gene.width = g2.width
+		    return_gene.height = g2.height
 		    return_gene.square_or_circle = g2.square_or_circle
 		  case 1
 		    return_gene.centre(0) = (g1.centre(0)+g2.centre(0))\2
 		    return_gene.centre(1) = (g1.centre(1)+g2.centre(1))\2
 		    return_gene.colour = RGB((g1.colour.red+g2.colour.red)\2,(g1.colour.green+g2.colour.green)\2,(g1.colour.blue+g2.colour.blue)\2)
-		    return_gene.span = (g1.span+g2.span)\2
+		    return_gene.width = (g1.width+g2.width)\2
+		    return_gene.height = (g1.height+g2.height)\2
 		    return_gene.square_or_circle = not g2.square_or_circle
 		  else
 		    return_gene.centre(0) = g1.centre(0)
 		    return_gene.centre(1) = g1.centre(1)
 		    return_gene.colour = g1.colour
-		    return_gene.span = g1.span
+		    return_gene.width = g1.width
+		    return_gene.height = g1.height
 		    return_gene.square_or_circle = g1.square_or_circle
 		  end select
 		  

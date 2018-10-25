@@ -2,8 +2,8 @@
 Protected Class ga_drawing
 	#tag Method, Flags = &h0
 		Function chromosomeCompare(c1 as chromosome, c2 as chromosome) As integer
-		  If c1.chromosome(0).span < c2.chromosome(0).span Then Return 1
-		  If c1.chromosome(0).span > c2.chromosome(0).span Then Return -1
+		  If c1.chromosome(0).width*c1.chromosome(0).height < c2.chromosome(0).width*c2.chromosome(0).height Then Return 1
+		  If c1.chromosome(0).width*c1.chromosome(0).height > c2.chromosome(0).width*c2.chromosome(0).height Then Return -1
 		  Return 0
 		  
 		End Function
@@ -50,9 +50,9 @@ Protected Class ga_drawing
 		    for j = 0 to ubound(genome(i).chromosome)
 		      p.Graphics.ForeColor = genome(i).chromosome(j).colour
 		      if genome(i).chromosome(j).square_or_circle then
-		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).span,genome(i).chromosome(j).span)
+		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).width\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).height\2,genome(i).chromosome(j).width,genome(i).chromosome(j).height)
 		      else
-		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).span\2,genome(i).chromosome(j).span,genome(i).chromosome(j).span)
+		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).width\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).height\2,genome(i).chromosome(j).width,genome(i).chromosome(j).height)
 		      end
 		    next
 		  next

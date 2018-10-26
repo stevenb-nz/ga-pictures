@@ -43,16 +43,19 @@ Protected Class ga_drawing
 
 	#tag Method, Flags = &h0
 		Function pic() As Picture
-		  dim i,j as Integer
+		  dim i,j,span,width,height as Integer
 		  dim p as new picture(64,64,32)
 		  
 		  for i = 0 to UBound(genome)
 		    for j = 0 to ubound(genome(i).chromosome)
 		      p.Graphics.ForeColor = genome(i).chromosome(j).colour
 		      if genome(i).chromosome(j).square_or_circle then
-		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).width\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).height\2,genome(i).chromosome(j).width,genome(i).chromosome(j).height)
+		        width = genome(i).chromosome(j).width
+		        height = genome(i).chromosome(j).height
+		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-width\2,genome(i).chromosome(j).centre(1)-height\2,width,height)
 		      else
-		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-genome(i).chromosome(j).width\2,genome(i).chromosome(j).centre(1)-genome(i).chromosome(j).height\2,genome(i).chromosome(j).width,genome(i).chromosome(j).height)
+		        span = min(genome(i).chromosome(j).width,genome(i).chromosome(j).height)
+		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-span\2,genome(i).chromosome(j).centre(1)-span\2,span,span)
 		      end
 		    next
 		  next

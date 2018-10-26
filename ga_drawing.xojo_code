@@ -34,6 +34,10 @@ Protected Class ga_drawing
 		Sub normalise()
 		  dim i as Integer
 		  
+		  while UBound(genome) > 20
+		    genome.remove(0)
+		  wend
+		  
 		  for i = 0 to UBound(genome)
 		    genome(i).normalise
 		  next
@@ -54,7 +58,7 @@ Protected Class ga_drawing
 		        height = genome(i).chromosome(j).height
 		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-width\2,genome(i).chromosome(j).centre(1)-height\2,width,height)
 		      else
-		        span = min(genome(i).chromosome(j).width,genome(i).chromosome(j).height)
+		        span = (genome(i).chromosome(j).width+genome(i).chromosome(j).height)/2
 		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-span\2,genome(i).chromosome(j).centre(1)-span\2,span,span)
 		      end
 		    next

@@ -20,7 +20,7 @@ Protected Class gene
 		Sub evolve()
 		  dim mutate_factor as double
 		  
-		  mutate_factor = 0.05
+		  mutate_factor = 0.01
 		  
 		  if rnd < mutate_factor then
 		    centre(0) = centre(0)+rnd*32-16
@@ -160,6 +160,11 @@ Protected Class gene
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="width"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

@@ -48,6 +48,10 @@ Protected Class chromosome
 		Sub normalise()
 		  dim i as Integer
 		  
+		  while UBound(chromosome) > 20
+		    chromosome.remove(0)
+		  wend
+		  
 		  for i = 0 to UBound(chromosome)
 		    chromosome(i).normalise
 		  next

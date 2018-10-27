@@ -56,7 +56,7 @@ Protected Class gene
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
 		  width = rnd*64
 		  height = rnd*64
-		  if rnd < 0.5 then
+		  if rnd < (2/3) then
 		    square_or_circle = true
 		  else
 		    square_or_circle = false

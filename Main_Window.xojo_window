@@ -554,6 +554,7 @@ End
 		      new_c.init
 		      for j = 0 to rnd*3+3
 		        new_g = new gene
+		        new_g.parent = new_c
 		        new_g.init
 		        new_c.chromosome.Append new_g
 		      next

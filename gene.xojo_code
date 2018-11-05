@@ -51,11 +51,12 @@ Protected Class gene
 
 	#tag Method, Flags = &h0
 		Sub init()
-		  centre(0) = rnd*32+16
-		  centre(1) = rnd*32+16
+		  
+		  centre(0) = rnd*parent.width/2+(parent.centre(0)-parent.width/4)
+		  centre(1) = rnd*parent.height/2+(parent.centre(1)-parent.height/4)
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
-		  width = rnd*64
-		  height = rnd*64
+		  width = rnd*parent.width
+		  height = rnd*parent.height
 		  if rnd < (2/3) then
 		    square_or_circle = true
 		  else
@@ -100,6 +101,10 @@ Protected Class gene
 
 	#tag Property, Flags = &h0
 		height As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		parent As chromosome
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

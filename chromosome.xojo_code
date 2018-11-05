@@ -45,6 +45,16 @@ Protected Class chromosome
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub init()
+		  centre(0) = rnd*32+16
+		  centre(1) = rnd*32+16
+		  width = rnd*64
+		  height = rnd*64
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub normalise()
 		  dim i as Integer
 		  
@@ -68,7 +78,19 @@ Protected Class chromosome
 
 
 	#tag Property, Flags = &h0
+		centre(1) As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		chromosome(-1) As gene
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		height As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		width As Integer
 	#tag EndProperty
 
 

@@ -551,6 +551,7 @@ End
 		    new_ga_d = new ga_drawing
 		    for i = 0 to rnd*3+3
 		      new_c = new chromosome
+		      new_c.init
 		      for j = 0 to rnd*3+3
 		        new_g = new gene
 		        new_g.init

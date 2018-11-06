@@ -55,8 +55,8 @@ Protected Class gene
 		  centre(0) = rnd*parent.width/2+(parent.centre(0)-parent.width/4)
 		  centre(1) = rnd*parent.height/2+(parent.centre(1)-parent.height/4)
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
-		  width = rnd*parent.width
-		  height = rnd*parent.height
+		  width = rnd*(parent.width/2)+parent.width/2
+		  height = rnd*(parent.height/2)+parent.height/2
 		  if rnd < (2/3) then
 		    square_or_circle = true
 		  else

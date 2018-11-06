@@ -48,8 +48,8 @@ Protected Class chromosome
 		Sub init()
 		  centre(0) = rnd*32+16
 		  centre(1) = rnd*32+16
-		  width = rnd*64
-		  height = rnd*64
+		  width = rnd*32+32
+		  height = rnd*32+32
 		  
 		End Sub
 	#tag EndMethod
@@ -126,6 +126,16 @@ Protected Class chromosome
 			Visible=true
 			Group="Position"
 			InitialValue="0"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="height"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="width"
+			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior

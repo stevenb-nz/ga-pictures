@@ -185,21 +185,21 @@ End
 		  
 		  if l1 < l2 then
 		    for i = 0 to (l2 mod l1) * (l2 \ l1+1) - 1
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i\((l2 \ l1)+1)),c2.chromosome(i))
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i\((l2 \ l1)+1)),c2.chromosome(i),return_chromosome)
 		    next
 		    for i = (l2 mod l1) * (l2 \ l1+1) to ubound(c2.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome((i-l2 mod l1)\(l2 \ l1)),c2.chromosome(i))
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome((i-l2 mod l1)\(l2 \ l1)),c2.chromosome(i),return_chromosome)
 		    next
 		  elseif l1 > l2 then
 		    for i = 0 to (l1 mod l2) * (l1 \ l2+1) - 1
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i\((l1 \ l2)+1)))
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i\((l1 \ l2)+1)),return_chromosome)
 		    next
 		    for i = (l1 mod l2) * (l1 \ l2+1) to ubound(c1.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome((i-l1 mod l2)\(l1 \ l2)))
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome((i-l1 mod l2)\(l1 \ l2)),return_chromosome)
 		    next
 		  else
 		    for i = 0 to ubound(c1.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i))
+		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i),return_chromosome)
 		    next
 		  end
 		  
@@ -209,8 +209,10 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function breed_dg(g1 as gene, g2 as gene) As gene
+		Function breed_dg(g1 as gene, g2 as gene, p as chromosome) As gene
 		  dim return_gene As new gene
+		  
+		  return_gene.parent = p
 		  
 		  Select case rnd*4
 		  case 0

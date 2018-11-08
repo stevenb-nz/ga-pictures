@@ -175,6 +175,11 @@ End
 		  dim i,l1,l2 as integer
 		  dim return_chromosome As new chromosome
 		  
+		  return_chromosome.centre(0) = (c1.centre(0) + c2.centre(0)) / 2
+		  return_chromosome.centre(1) = (c1.centre(1) + c2.centre(1)) / 2
+		  return_chromosome.height = (c1.height + c2.height) / 2
+		  return_chromosome.width = (c1.width + c2.width) / 2
+		  
 		  l1 = UBound(c1.chromosome)+1
 		  l2 = UBound(c2.chromosome)+1
 		  

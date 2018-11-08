@@ -17,6 +17,22 @@ Protected Class chromosome
 	#tag Method, Flags = &h0
 		Sub evolve()
 		  dim i as integer
+		  dim mutate_factor as double
+		  
+		  mutate_factor = 0.01
+		  
+		  if rnd < mutate_factor then
+		    centre(0) = centre(0)+rnd*32-16
+		  end
+		  if rnd < mutate_factor then
+		    centre(1) = centre(1)+rnd*32-16
+		  end
+		  if rnd < mutate_factor then
+		    width = width * (rnd+0.5)
+		  end
+		  if rnd < mutate_factor then
+		    height = height * (rnd+0.5)
+		  end
 		  
 		  if rnd < 0.1 then
 		    i = rnd*(UBound(chromosome)+1)

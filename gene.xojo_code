@@ -4,12 +4,13 @@ Protected Class gene
 		Function clone() As gene
 		  dim g As new gene
 		  
-		  g.centre(0) = centre(0)
-		  g.centre(1) = centre(1)
+		  g.gcentre(0) = gcentre(0)
+		  g.gcentre(1) = gcentre(1)
 		  g.colour = colour
-		  g.width = width
-		  g.height = height
+		  g.gwidth = gwidth
+		  g.gheight = gheight
 		  g.square_or_circle = square_or_circle
+		  g.parent = parent
 		  
 		  return g
 		  
@@ -23,10 +24,10 @@ Protected Class gene
 		  mutate_factor = 0.01
 		  
 		  if rnd < mutate_factor then
-		    centre(0) = centre(0)+rnd*32-16
+		    gcentre(0) = gcentre(0)+rnd*32-16
 		  end
 		  if rnd < mutate_factor then
-		    centre(1) = centre(1)+rnd*32-16
+		    gcentre(1) = gcentre(1)+rnd*32-16
 		  end
 		  if rnd < mutate_factor then
 		    colour = rgb(rnd*255,colour.Green,colour.blue)
@@ -38,10 +39,10 @@ Protected Class gene
 		    colour = rgb(colour.red,colour.Green,rnd*255)
 		  end
 		  if rnd < mutate_factor then
-		    width = width * (rnd+0.5)
+		    gwidth = gwidth * (rnd+0.5)
 		  end
 		  if rnd < mutate_factor then
-		    height = height * (rnd+0.5)
+		    gheight = gheight * (rnd+0.5)
 		  end
 		  if rnd < mutate_factor then
 		    square_or_circle = not square_or_circle
@@ -52,11 +53,11 @@ Protected Class gene
 	#tag Method, Flags = &h0
 		Sub init()
 		  
-		  centre(0) = rnd*parent.width/2+(parent.centre(0)-parent.width/4)
-		  centre(1) = rnd*parent.height/2+(parent.centre(1)-parent.height/4)
+		  gcentre(0) = rnd*parent.cwidth/2+(parent.ccentre(0)-parent.cwidth/4)
+		  gcentre(1) = rnd*parent.cheight/2+(parent.ccentre(1)-parent.cheight/4)
 		  colour = RGB(rnd*255,rnd*255,rnd*255)
-		  width = rnd*(parent.width/2)+parent.width/2
-		  height = rnd*(parent.height/2)+parent.height/2
+		  gwidth = rnd*(parent.cwidth/2)+parent.cwidth/2
+		  gheight = rnd*(parent.cheight/2)+parent.cheight/2
 		  if rnd < (2/3) then
 		    square_or_circle = true
 		  else
@@ -68,23 +69,23 @@ Protected Class gene
 
 	#tag Method, Flags = &h0
 		Sub normalise()
-		  if width > 127 then
-		    width = 127
+		  if gwidth > parent.cwidth*2-1 then
+		    gwidth = parent.cwidth*2-1
 		  end
-		  if height > 127 then
-		    height = 127
+		  if gheight > parent.cheight*2-1 then
+		    gheight = parent.cheight*2-1
 		  end
-		  if centre(0) - width / 2 > 63 then
-		    centre(0) = width/2 + 63
+		  if gcentre(0) - gwidth / 2 > parent.cwidth-1 then
+		    gcentre(0) = gwidth/2 + parent.cwidth-1
 		  end
-		  if centre(0) + width / 2 < 0 then
-		    centre(0) = 0 - width/2
+		  if gcentre(0) + gwidth / 2 < 0 then
+		    gcentre(0) = 0 - gwidth/2
 		  end
-		  if centre(1) - height / 2 > 63 then
-		    centre(1) = height/2 + 63
+		  if gcentre(1) - gheight / 2 > parent.cheight-1 then
+		    gcentre(1) = gheight/2 + parent.cheight-1
 		  end
-		  if centre(1) + height / 2 < 0 then
-		    centre(1) = 0 - height/2
+		  if gcentre(1) + gheight / 2 < 0 then
+		    gcentre(1) = 0 - gheight/2
 		  end
 		  
 		End Sub
@@ -92,15 +93,19 @@ Protected Class gene
 
 
 	#tag Property, Flags = &h0
-		centre(1) As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
 		colour As Color
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		height As Integer
+		gcentre(1) As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		gheight As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		gwidth As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -109,10 +114,6 @@ Protected Class gene
 
 	#tag Property, Flags = &h0
 		square_or_circle As boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		width As Integer
 	#tag EndProperty
 
 
@@ -151,7 +152,7 @@ Protected Class gene
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="height"
+			Name="gheight"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
@@ -167,7 +168,7 @@ Protected Class gene
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="width"
+			Name="gwidth"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

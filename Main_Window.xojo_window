@@ -65,6 +65,7 @@ End
 		      redim ga_drawings_array(-1)
 		      
 		      for i = 0 to UBound(temp_ga_d_array)
+		        temp_ga_d_array(i).sort_genes
 		        ga_drawings_array.Append temp_ga_d_array(i)
 		      next
 		    else
@@ -142,26 +143,26 @@ End
 		  dim i,l1,l2 as integer
 		  dim return_drawing As new ga_drawing
 		  
-		  l1 = UBound(d1.genome)+1
-		  l2 = UBound(d2.genome)+1
+		  l1 = UBound(d1.chromosomes)+1
+		  l2 = UBound(d2.chromosomes)+1
 		  
 		  if l1 < l2 then
 		    for i = 0 to (l2 mod l1) * (l2 \ l1+1) - 1
-		      return_drawing.genome.Append breed_dc(d1.genome(i\((l2 \ l1)+1)),d2.genome(i))
+		      return_drawing.chromosomes.Append breed_dc(d1.chromosomes(i\((l2 \ l1)+1)),d2.chromosomes(i))
 		    next
-		    for i = (l2 mod l1) * (l2 \ l1+1) to UBound(d2.genome)
-		      return_drawing.genome.Append breed_dc(d1.genome((i-l2 mod l1)\(l2 \ l1)),d2.genome(i))
+		    for i = (l2 mod l1) * (l2 \ l1+1) to UBound(d2.chromosomes)
+		      return_drawing.chromosomes.Append breed_dc(d1.chromosomes((i-l2 mod l1)\(l2 \ l1)),d2.chromosomes(i))
 		    next
 		  ElseIf l1 > l2 then
 		    for i = 0 to (l1 mod l2) * (l1 \ l2+1) - 1
-		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i\((l1 \ l2)+1)))
+		      return_drawing.chromosomes.Append breed_dc(d1.chromosomes(i),d2.chromosomes(i\((l1 \ l2)+1)))
 		    next
-		    for i = (l1 mod l2) * (l1 \ l2+1) to UBound(d1.genome)
-		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome((i-l1 mod l2)\(l1 \ l2)))
+		    for i = (l1 mod l2) * (l1 \ l2+1) to UBound(d1.chromosomes)
+		      return_drawing.chromosomes.Append breed_dc(d1.chromosomes(i),d2.chromosomes((i-l1 mod l2)\(l1 \ l2)))
 		    next
 		  else
-		    for i = 0 to UBound(d1.genome)
-		      return_drawing.genome.Append breed_dc(d1.genome(i),d2.genome(i))
+		    for i = 0 to UBound(d1.chromosomes)
+		      return_drawing.chromosomes.Append breed_dc(d1.chromosomes(i),d2.chromosomes(i))
 		    next
 		  end
 		  
@@ -175,31 +176,49 @@ End
 		  dim i,l1,l2 as integer
 		  dim return_chromosome As new chromosome
 		  
-		  return_chromosome.centre(0) = (c1.centre(0) + c2.centre(0)) / 2
-		  return_chromosome.centre(1) = (c1.centre(1) + c2.centre(1)) / 2
-		  return_chromosome.height = (c1.height + c2.height) / 2
-		  return_chromosome.width = (c1.width + c2.width) / 2
+		  Select case rnd*4
+		  case 0
+		    return_chromosome.ccentre(0) = c2.ccentre(0)
+		    return_chromosome.ccentre(1) = c2.ccentre(1)
+		    return_chromosome.cwidth = c2.cwidth
+		    return_chromosome.cheight = c2.cheight
+		  case 1
+		    return_chromosome.ccentre(0) = (c1.ccentre(0)+c2.ccentre(0))\2
+		    return_chromosome.ccentre(1) = (c1.ccentre(1)+c2.ccentre(1))\2
+		    return_chromosome.cwidth = (c1.cwidth+c2.cwidth)\2
+		    return_chromosome.cheight = (c1.cheight+c2.cheight)\2
+		  else
+		    return_chromosome.ccentre(0) = c1.ccentre(0)
+		    return_chromosome.ccentre(1) = c1.ccentre(1)
+		    return_chromosome.cwidth = c1.cwidth
+		    return_chromosome.cheight = c1.cheight
+		  end select
 		  
-		  l1 = UBound(c1.chromosome)+1
-		  l2 = UBound(c2.chromosome)+1
+		  l1 = UBound(c1.genes)+1
+		  l2 = UBound(c2.genes)+1
 		  
 		  if l1 < l2 then
 		    for i = 0 to (l2 mod l1) * (l2 \ l1+1) - 1
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i\((l2 \ l1)+1)),c2.chromosome(i),return_chromosome)
+		      return_chromosome.genes.Append breed_dg(c1.genes(i\((l2 \ l1)+1)),c2.genes(i))
+		      return_chromosome.genes(UBound(return_chromosome.genes)).parent = return_chromosome
 		    next
-		    for i = (l2 mod l1) * (l2 \ l1+1) to ubound(c2.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome((i-l2 mod l1)\(l2 \ l1)),c2.chromosome(i),return_chromosome)
+		    for i = (l2 mod l1) * (l2 \ l1+1) to ubound(c2.genes)
+		      return_chromosome.genes.Append breed_dg(c1.genes((i-l2 mod l1)\(l2 \ l1)),c2.genes(i))
+		      return_chromosome.genes(UBound(return_chromosome.genes)).parent = return_chromosome
 		    next
 		  elseif l1 > l2 then
 		    for i = 0 to (l1 mod l2) * (l1 \ l2+1) - 1
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i\((l1 \ l2)+1)),return_chromosome)
+		      return_chromosome.genes.Append breed_dg(c1.genes(i),c2.genes(i\((l1 \ l2)+1)))
+		      return_chromosome.genes(UBound(return_chromosome.genes)).parent = return_chromosome
 		    next
-		    for i = (l1 mod l2) * (l1 \ l2+1) to ubound(c1.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome((i-l1 mod l2)\(l1 \ l2)),return_chromosome)
+		    for i = (l1 mod l2) * (l1 \ l2+1) to ubound(c1.genes)
+		      return_chromosome.genes.Append breed_dg(c1.genes(i),c2.genes((i-l1 mod l2)\(l1 \ l2)))
+		      return_chromosome.genes(UBound(return_chromosome.genes)).parent = return_chromosome
 		    next
 		  else
-		    for i = 0 to ubound(c1.chromosome)
-		      return_chromosome.chromosome.Append breed_dg(c1.chromosome(i),c2.chromosome(i),return_chromosome)
+		    for i = 0 to ubound(c1.genes)
+		      return_chromosome.genes.Append breed_dg(c1.genes(i),c2.genes(i))
+		      return_chromosome.genes(UBound(return_chromosome.genes)).parent = return_chromosome
 		    next
 		  end
 		  
@@ -209,32 +228,30 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function breed_dg(g1 as gene, g2 as gene, p as chromosome) As gene
+		Function breed_dg(g1 as gene, g2 as gene) As gene
 		  dim return_gene As new gene
-		  
-		  return_gene.parent = p
 		  
 		  Select case rnd*4
 		  case 0
-		    return_gene.centre(0) = g2.centre(0)
-		    return_gene.centre(1) = g2.centre(1)
+		    return_gene.gcentre(0) = g2.gcentre(0)
+		    return_gene.gcentre(1) = g2.gcentre(1)
 		    return_gene.colour = g2.colour
-		    return_gene.width = g2.width
-		    return_gene.height = g2.height
+		    return_gene.gwidth = g2.gwidth
+		    return_gene.gheight = g2.gheight
 		    return_gene.square_or_circle = g2.square_or_circle
 		  case 1
-		    return_gene.centre(0) = (g1.centre(0)+g2.centre(0))\2
-		    return_gene.centre(1) = (g1.centre(1)+g2.centre(1))\2
+		    return_gene.gcentre(0) = (g1.gcentre(0)+g2.gcentre(0))\2
+		    return_gene.gcentre(1) = (g1.gcentre(1)+g2.gcentre(1))\2
 		    return_gene.colour = RGB((g1.colour.red+g2.colour.red)\2,(g1.colour.green+g2.colour.green)\2,(g1.colour.blue+g2.colour.blue)\2)
-		    return_gene.width = (g1.width+g2.width)\2
-		    return_gene.height = (g1.height+g2.height)\2
+		    return_gene.gwidth = (g1.gwidth+g2.gwidth)\2
+		    return_gene.gheight = (g1.gheight+g2.gheight)\2
 		    return_gene.square_or_circle = not g2.square_or_circle
 		  else
-		    return_gene.centre(0) = g1.centre(0)
-		    return_gene.centre(1) = g1.centre(1)
+		    return_gene.gcentre(0) = g1.gcentre(0)
+		    return_gene.gcentre(1) = g1.gcentre(1)
 		    return_gene.colour = g1.colour
-		    return_gene.width = g1.width
-		    return_gene.height = g1.height
+		    return_gene.gwidth = g1.gwidth
+		    return_gene.gheight = g1.gheight
 		    return_gene.square_or_circle = g1.square_or_circle
 		  end select
 		  
@@ -563,9 +580,9 @@ End
 		        new_g = new gene
 		        new_g.parent = new_c
 		        new_g.init
-		        new_c.chromosome.Append new_g
+		        new_c.genes.Append new_g
 		      next
-		      new_ga_d.genome.Append new_c
+		      new_ga_d.chromosomes.Append new_c
 		    next
 		    new_ga_d.sort_genes
 		    ga_drawings_array.Append new_ga_d

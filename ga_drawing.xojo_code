@@ -2,8 +2,8 @@
 Protected Class ga_drawing
 	#tag Method, Flags = &h0
 		Function chromosomeCompare(c1 as chromosome, c2 as chromosome) As integer
-		  If c1.chromosome(0).width*c1.chromosome(0).height < c2.chromosome(0).width*c2.chromosome(0).height Then Return 1
-		  If c1.chromosome(0).width*c1.chromosome(0).height > c2.chromosome(0).width*c2.chromosome(0).height Then Return -1
+		  If c1.cwidth*c1.cheight < c2.cwidth*c2.cheight Then Return 1
+		  If c1.cwidth*c1.cheight > c2.cwidth*c2.cheight Then Return -1
 		  Return 0
 		  
 		End Function
@@ -14,17 +14,17 @@ Protected Class ga_drawing
 		  dim i as integer
 		  
 		  if rnd < 0.1 then
-		    i = rnd*(UBound(genome)+1)
-		    genome.Insert(i,genome(i).clone)
+		    i = rnd*(UBound(chromosomes)+1)
+		    chromosomes.Insert(i,chromosomes(i).clone)
 		  end
 		  
 		  if rnd < 0.15 then
-		    i = rnd*(UBound(genome)+1)
-		    genome.Remove(i)
+		    i = rnd*(UBound(chromosomes)+1)
+		    chromosomes.Remove(i)
 		  end
 		  
-		  for i = 0 to UBound(genome)
-		    genome(i).evolve
+		  for i = 0 to UBound(chromosomes)
+		    chromosomes(i).evolve
 		  next
 		  
 		End Sub
@@ -34,12 +34,12 @@ Protected Class ga_drawing
 		Sub normalise()
 		  dim i as Integer
 		  
-		  while UBound(genome) > 20
-		    genome.remove(0)
+		  while UBound(chromosomes) > 20
+		    chromosomes.remove(0)
 		  wend
 		  
-		  for i = 0 to UBound(genome)
-		    genome(i).normalise
+		  for i = 0 to UBound(chromosomes)
+		    chromosomes(i).normalise
 		  next
 		  
 		End Sub
@@ -50,16 +50,16 @@ Protected Class ga_drawing
 		  dim i,j,span,width,height as Integer
 		  dim p as new picture(64,64,32)
 		  
-		  for i = 0 to UBound(genome)
-		    for j = 0 to ubound(genome(i).chromosome)
-		      p.Graphics.ForeColor = genome(i).chromosome(j).colour
-		      if genome(i).chromosome(j).square_or_circle then
-		        width = genome(i).chromosome(j).width
-		        height = genome(i).chromosome(j).height
-		        p.Graphics.FillRect(genome(i).chromosome(j).centre(0)-width\2,genome(i).chromosome(j).centre(1)-height\2,width,height)
+		  for i = 0 to UBound(chromosomes)
+		    for j = 0 to ubound(chromosomes(i).genes)
+		      p.Graphics.ForeColor = chromosomes(i).genes(j).colour
+		      if chromosomes(i).genes(j).square_or_circle then
+		        width = chromosomes(i).genes(j).gwidth
+		        height = chromosomes(i).genes(j).gheight
+		        p.Graphics.FillRect(chromosomes(i).genes(j).gcentre(0)-width\2,chromosomes(i).genes(j).gcentre(1)-height\2,width,height)
 		      else
-		        span = (genome(i).chromosome(j).width+genome(i).chromosome(j).height)/2
-		        p.Graphics.FillOval(genome(i).chromosome(j).centre(0)-span\2,genome(i).chromosome(j).centre(1)-span\2,span,span)
+		        span = (chromosomes(i).genes(j).gwidth+chromosomes(i).genes(j).gheight)/2
+		        p.Graphics.FillOval(chromosomes(i).genes(j).gcentre(0)-span\2,chromosomes(i).genes(j).gcentre(1)-span\2,span,span)
 		      end
 		    next
 		  next
@@ -73,18 +73,18 @@ Protected Class ga_drawing
 		Sub sort_genes()
 		  dim i as Integer
 		  
-		  for i = 0 to UBound(genome)
-		    genome(i).sort_genes
+		  for i = 0 to UBound(chromosomes)
+		    chromosomes(i).sort_genes
 		  next
 		  
-		  genome.Sort(AddressOf chromosomeCompare)
+		  chromosomes.Sort(AddressOf chromosomeCompare)
 		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		genome(-1) As chromosome
+		chromosomes(-1) As chromosome
 	#tag EndProperty
 
 

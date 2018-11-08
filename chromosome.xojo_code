@@ -5,8 +5,13 @@ Protected Class chromosome
 		  dim c As new chromosome
 		  dim i As Integer
 		  
-		  for i = 0 to UBound(chromosome)
-		    c.chromosome.Append chromosome(i).clone
+		  c.cheight = cheight
+		  c.cwidth = cwidth
+		  c.ccentre(0) = ccentre(0)
+		  c.ccentre(1) = ccentre(1)
+		  
+		  for i = 0 to UBound(genes)
+		    c.genes.Append genes(i).clone
 		  next
 		  
 		  return c
@@ -22,30 +27,30 @@ Protected Class chromosome
 		  mutate_factor = 0.01
 		  
 		  if rnd < mutate_factor then
-		    centre(0) = centre(0)+rnd*32-16
+		    ccentre(0) = ccentre(0)+rnd*32-16
 		  end
 		  if rnd < mutate_factor then
-		    centre(1) = centre(1)+rnd*32-16
+		    ccentre(1) = ccentre(1)+rnd*32-16
 		  end
 		  if rnd < mutate_factor then
-		    width = width * (rnd+0.5)
+		    cwidth = cwidth * (rnd+0.5)
 		  end
 		  if rnd < mutate_factor then
-		    height = height * (rnd+0.5)
+		    cheight = cheight * (rnd+0.5)
 		  end
 		  
 		  if rnd < 0.1 then
-		    i = rnd*(UBound(chromosome)+1)
-		    chromosome.Insert(i,chromosome(i).clone)
+		    i = rnd*(UBound(genes)+1)
+		    genes.Insert(i,genes(i).clone)
 		  end
 		  
 		  if rnd < 0.15 then
-		    i = rnd*(UBound(chromosome)+1)
-		    chromosome.Remove(i)
+		    i = rnd*(UBound(genes)+1)
+		    genes.Remove(i)
 		  end
 		  
-		  for i = 0 to UBound(chromosome)
-		    chromosome(i).evolve
+		  for i = 0 to UBound(genes)
+		    genes(i).evolve
 		  next
 		  
 		End Sub
@@ -53,8 +58,8 @@ Protected Class chromosome
 
 	#tag Method, Flags = &h0
 		Function geneCompare(g1 As gene, g2 As gene) As Integer
-		  If g1.width*g1.height < g2.width*g2.height Then Return 1
-		  If g1.width*g1.height > g2.width*g2.height Then Return -1
+		  If g1.gwidth*g1.gheight < g2.gwidth*g2.gheight Then Return 1
+		  If g1.gwidth*g1.gheight > g2.gwidth*g2.gheight Then Return -1
 		  Return 0
 		  
 		End Function
@@ -62,10 +67,10 @@ Protected Class chromosome
 
 	#tag Method, Flags = &h0
 		Sub init()
-		  centre(0) = rnd*32+16
-		  centre(1) = rnd*32+16
-		  width = rnd*32+32
-		  height = rnd*32+32
+		  ccentre(0) = rnd*32+16
+		  ccentre(1) = rnd*32+16
+		  cwidth = rnd*32+32
+		  cheight = rnd*32+32
 		  
 		End Sub
 	#tag EndMethod
@@ -74,12 +79,12 @@ Protected Class chromosome
 		Sub normalise()
 		  dim i as Integer
 		  
-		  while UBound(chromosome) > 20
-		    chromosome.remove(0)
+		  while UBound(genes) > 20
+		    genes.remove(0)
 		  wend
 		  
-		  for i = 0 to UBound(chromosome)
-		    chromosome(i).normalise
+		  for i = 0 to UBound(genes)
+		    genes(i).normalise
 		  next
 		  
 		End Sub
@@ -87,26 +92,26 @@ Protected Class chromosome
 
 	#tag Method, Flags = &h0
 		Sub sort_genes()
-		  chromosome.Sort(AddressOf geneCompare)
+		  genes.Sort(AddressOf geneCompare)
 		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		centre(1) As Integer
+		ccentre(1) As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		chromosome(-1) As gene
+		cheight As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		height As Integer
+		cwidth As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		width As Integer
+		genes(-1) As gene
 	#tag EndProperty
 
 
@@ -145,12 +150,12 @@ Protected Class chromosome
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="height"
+			Name="cheight"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="width"
+			Name="cwidth"
 			Group="Behavior"
 			Type="Integer"
 		#tag EndViewProperty

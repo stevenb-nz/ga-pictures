@@ -34,7 +34,7 @@ Protected Class ga_drawing
 		Sub normalise()
 		  dim i as Integer
 		  
-		  while UBound(chromosomes) > 20
+		  while UBound(chromosomes) > 40
 		    chromosomes.remove(0)
 		  wend
 		  

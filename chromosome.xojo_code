@@ -79,7 +79,7 @@ Protected Class chromosome
 		Sub normalise()
 		  dim i as Integer
 		  
-		  while UBound(genes) > 20
+		  while UBound(genes) > 10
 		    genes.remove(0)
 		  wend
 		  
